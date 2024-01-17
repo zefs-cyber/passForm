@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tj">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+</head>
+
+<body>
+    <div id="header">
+        <!-- Logo here -->
+        <img id="logo" src="{% static 'img/logo.png' %}" alt="Logo">
+    </div>
+
+    <div id="customAlert" class="custom-alert">
+        <div class="alert-content">
+            <p id="alertMessage"></p>
+            <button onclick="closeCustomAlert()">Фаҳмидам</button>
+        </div>
+    </div>
+    <div id="overlay" class="overlay"></div>
+
+    <div id="userForm">
+        <form enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
+            {% csrf_token %}
+            <label for="fullNameCyrillic">Номи пурра (кирилӣ):</label>
+            <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" required>
+
+            <label for="fullNameLatin">Номи пурра (лотинӣ):</label>
+            <input type="text" id="fullNameLatin" name="fullNameLatin" required>
+
+            <label for="birthdate">Санаи таваллуд:</label>
+            <input type="date" id="birthdate" name="birthdate" required>
+
+            <label for="department">Маълумот:</label>
+            <select id="department" name="department" required>
+                <option value="Миёна">Миёна</option>
+                <option value="Миёнаи махсус">Миёнаи махсус</option>
+                <option value="Олӣ (бакалавр)">Олӣ (бакалавр)</option>
+                <option value="Олӣ (мутахассис)">Олӣ (мутахассис)</option>
+                <option value="Магистр">Магистр</option>
+                <option value="Номзади илм">Номзади илм</option>
+                <option value="Доктор PhD">Доктор PhD</option>
+                <option value="Доктори илм">Доктори илм</option>
+            </select>
+
+            <label for="eduType">Шакли таҳсил:</label>
+            <select id="eduType" name="eduType" required>
+                <option value="Рӯзона">Рӯзона </option>
+                <option value="Ғоибона">Ғоибона</option>
+            </select>
+
+            <label for="studentCard">Корти донишҷӯ:</label>
+            <input type="number" id="studentCard" name="studentCard" required>
+
+            <label>Ҷинс:</label><br>
+            <label for="male">Male
+                <input type="radio" id="male" name="gender" value="Male" required />
+            </label>
+
+            <label for="female">Female
+                <input type="radio" id="female" name="gender" value="Female" required />
+            </label>
+            <br>
+
+            <label for="issueDate">Оғози эътибор:</label>
+            <input type="date" id="issueDate" name="issueDate" required>
+
+            <label for="expiryDate">Анҷоми эътибор:</label>
+            <input type="date" id="expiryDate" name="expiryDate" required>
+
+            <label for="passportNumber">Рақами шиноснома:</label>
+            <input type="text" id="passportNumber" name="passportNumber" required>
+
+            <label for="address">Нишонӣ:</label>
+            <input type="text" id="address" name="address" required>
+            <br>
+
+            <label for="rma">РМА:</label>
+            <input type="number" id="rma" name="rma" required>
+
+            <label for="jobLocation">Мақоми шиносномадиҳанда:</label>
+            <!-- <input type="text" id="jobLocation" name="jobLocation" required> -->
+            <select name="jobLocation" id="jobLocation" required>
+                <option value="РВКД дар шаҳри Душанбе">РВКД дар шаҳри Душанбе</option>
+                <option value="ШВКД дар ноҳияи И.Сомонӣ">ШВКД дар ноҳияи И.Сомонӣ</option>
+                <option value="ШВКД-1 дар ноҳияи Шоҳмансур">ШВКД-1 дар ноҳияи Шоҳмансур</option>
+                <option value="ШВКД-2 дар ноҳияи Шоҳмансур">ШВКД-2 дар ноҳияи Шоҳмансур</option>
+                <option value="ШВКД-1 дар ноҳияи Фирдавсӣ">ШВКД-1 дар ноҳияи Фирдавсӣ</option>
+                <option value="ШВКД-2 дар ноҳияи Фирдавсӣ">ШВКД-2 дар ноҳияи Фирдавсӣ</option>
+                <option value="ШВКД -1 дар ноҳияи Сино">ШВКД -1 дар ноҳияи Сино</option>
+                <option value="ШВКД -2 дар ноҳияи Сино">ШВКД -2 дар ноҳияи Сино</option>
+                <option value="ШВКД дар ноҳияи Варзоб">ШВКД дар ноҳияи Варзоб</option>
+                <option value="ШВКД дар ноҳияи Ҳисор">ШВКД дар ноҳияи Ҳисор</option>
+                <option value="ШВКД дар ноҳияи Ваҳдат">ШВКД дар ноҳияи Ваҳдат</option>
+                <option value="ШВКД-1 дар ноҳияи Рӯдакӣ">ШВКД-1 дар ноҳияи Рӯдакӣ</option>
+                <option value="ШВКД-2 дар ноҳияи Рӯдакӣ">ШВКД-2 дар ноҳияи Рӯдакӣ</option>
+                <option value="ШВКД дар ноҳияи Турсунзода">ШВКД дар ноҳияи Турсунзода</option>
+                <option value="ШВКД дар ноҳияи Шаҳринав">ШВКД дар ноҳияи Шаҳринав</option>
+                <option value="ШВКД дар ноҳияи Файзобод">ШВКД дар ноҳияи Файзобод</option>
+                <option value="ШВКД дар шаҳри Роғун">ШВКД дар шаҳри Роғун</option>
+                <option value="РВКД дар вилояти Хатлон">РВКД дар вилояти Хатлон</option>
+                <option value="ШВКД дар ш.Бохтар">ШВКД дар ш.Бохтар</option>
+                <option value="Қисми минтақавӣ оид ба гуруҳи ноҳияҳои Кӯлоб">Қисми минтақавӣ оид ба гуруҳи ноҳияҳои Кӯлоб</option>
+                <option value="ШВКД дар шаҳри Кӯлоб">ШВКД дар шаҳри Кӯлоб</option>
+                <option value="ШВКД дар ноҳияи А.Ҷомӣ">ШВКД дар ноҳияи А.Ҷомӣ</option>
+                <option value="ШВКД дар ноҳияи Балҷувон">ШВКД дар ноҳияи Балҷувон</option>
+                <option value="ШВКД дар ноҳияи Кӯшониён">ШВКД дар ноҳияи Кӯшониён</option>
+                <option value="ШВКД дар ноҳияи Вахш">ШВКД дар ноҳияи Вахш</option>
+                <option value="ШВКД дар ноҳияи Восеъ">ШВКД дар ноҳияи Восеъ</option>
+                <option value="ШВКД дар ноҳияи Данғара">ШВКД дар ноҳияи Данғара</option>
+                <option value="ШВКД дар ноҳияи Ёвон">ШВКД дар ноҳияи Ёвон</option>
+                <option value="ШВКД дар шаҳри Норак">ШВКД дар шаҳри Норак</option>
+                <option value="ШВКД дар ноҳияи Панҷ">ШВКД дар ноҳияи Панҷ</option>
+                <option value="ШВКД дар ноҳияи Леваканд">ШВКД дар ноҳияи Леваканд</option>
+                <option value="ШВКД дар ноҳияи Қубодиён">ШВКД дар ноҳияи Қубодиён</option>
+                <option value="ШВКД дар ноҳияи Ҷайҳун">ШВКД дар ноҳияи Ҷайҳун</option>
+                <option value="ШВКД дар ноҳияи Ҳамадонӣ">ШВКД дар ноҳияи Ҳамадонӣ</option>
+                <option value="ШВКД дар ноҳияи Муъминобод">ШВКД дар ноҳияи Муъминобод</option>
+                <option value="ШВКД дар ноҳияи Н.Хусрав">ШВКД дар ноҳияи Н.Хусрав</option>
+                <option value="ШВКД дар ноҳияи Темурмалик">ШВКД дар ноҳияи Темурмалик</option>
+                <option value="ШВКД дар ноҳияи Фархор">ШВКД дар ноҳияи Фархор</option>
+                <option value="ШВКД дар ноҳияи Ховалинг">ШВКД дар ноҳияи Ховалинг</option>
+                <option value="ШВКД дар ноҳияи Хуросон">ШВКД дар ноҳияи Хуросон</option>
+                <option value="ШВКД дар ноҳияи Ҷ.Балхӣ">ШВКД дар ноҳияи Ҷ.Балхӣ</option>
+                <option value="ШВКД дар ноҳияи Дӯстӣ">ШВКД дар ноҳияи Дӯстӣ</option>
+                <option value="ШВКД дар ноҳияи Шаҳритус">ШВКД дар ноҳияи Шаҳритус</option>
+                <option value="ШВКД дар ноҳияи Ш.Шоҳин">ШВКД дар ноҳияи Ш.Шоҳин</option>
+                <option value="РВКД дар вилояти Суғд">РВКД дар вилояти Суғд</option>
+                <option value="ШВКД дар шаҳри Хуҷанд">ШВКД дар шаҳри Хуҷанд</option>
+                <option value="ШВКД дар ноҳияи Айнӣ">ШВКД дар ноҳияи Айнӣ</option>
+                <option value="ШВКД дар ноҳияи Ашт">ШВКД дар ноҳияи Ашт</option>
+                <option value="ШВКД дар ноҳияи Б.Ғафуров">ШВКД дар ноҳияи Б.Ғафуров</option>
+                <option value="ШВКД дар ноҳияи Гулистон">ШВКД дар ноҳияи Гулистон</option>
+                <option value="ШВКД дар ноҳияи Ғончӣ">ШВКД дар ноҳияи Ғончӣ</option>
+                <option value="ШВКД дар ноҳияи Кӯҳистони Мастчоҳ">ШВКД дар ноҳияи Кӯҳистони Мастчоҳ</option>
+                <option value="ШВКД дар ноҳияи Мастчоҳ">ШВКД дар ноҳияи Мастчоҳ</option>
+                <option value="ШВКД дар ноҳияи Ҷ.Расулов">ШВКД дар ноҳияи Ҷ.Расулов</option>
+                <option value="ШВКД дар ноҳияи Исфара-1">ШВКД дар ноҳияи Исфара-1</option>
+                <option value="ШВКД дар ноҳияи Исфара-2">ШВКД дар ноҳияи Исфара-2</option>
+                <option value="ШВКД дар шаҳри Бӯстон">ШВКД дар шаҳри Бӯстон</option>
+                <option value="ШВКД дар ноҳияи Спитамен">ШВКД дар ноҳияи Спитамен</option>
+                <option value="ШВКД дар ноҳияи Истаравшан">ШВКД дар ноҳияи Истаравшан</option>
+                <option value="ШВКД дар ноҳияи Шаҳристон">ШВКД дар ноҳияи Шаҳристон</option>
+                <option value="ШВКД дар шаҳри Истиқлол">ШВКД дар шаҳри Истиқлол</option>
+                <option value="ШВКД дар шаҳри Конибодом">ШВКД дар шаҳри Конибодом</option>
+                <option value="ШВКД дар шаҳри Панҷакент">ШВКД дар шаҳри Панҷакент</option>
+                <option value="ШВКД дар ноҳияи Зафаробод">ШВКД дар ноҳияи Зафаробод</option>
+                <option value="РВКД дар ВМКБ">РВКД дар ВМКБ</option>
+                <option value="ШВКД дар шаҳри Хоруғ">ШВКД дар шаҳри Хоруғ</option>
+                <option value="ШВКД дар ноҳияи Ванҷ">ШВКД дар ноҳияи Ванҷ</option>
+                <option value="ШВКД дар ноҳияи Дарвоз">ШВКД дар ноҳияи Дарвоз</option>
+                <option value="ШВКД дар ноҳияи Ишкошим">ШВКД дар ноҳияи Ишкошим</option>
+                <option value="ШВКД дар ноҳияи Мурғоб">ШВКД дар ноҳияи Мурғоб</option>
+                <option value="ШВКД дар ноҳияи Роштқалъа">ШВКД дар ноҳияи Роштқалъа</option>
+                <option value="ШВКД дар ноҳияи Рушон">ШВКД дар ноҳияи Рушон</option>
+                <option value="ШВКД дар ноҳияи Шуғнон">ШВКД дар ноҳияи Шуғнон</option>
+                <option value="РВКД дар минтақа ва ноҳияи Рашт">РВКД дар минтақа ва ноҳияи Рашт</option>
+                <option value="ШВКД дар шаҳраки Навобод">ШВКД дар шаҳраки Навобод</option>
+                <option value="ШВКД дар ноҳияи Нуробод">ШВКД дар ноҳияи Нуробод</option>
+                <option value="ШВКД дар ноҳияи Сангвор">ШВКД дар ноҳияи Сангвор</option>
+                <option value="ШВКД дар ноҳияи Тоҷикобод">ШВКД дар ноҳияи Тоҷикобод</option>
+                <option value="ШВКД дар ноҳияи Лахш">ШВКД дар ноҳияи Лахш</option>
+            </select>
+
+            <label for="phoneNumber">Рақами телефон (бе рамзи кишвар):</label>
+            <input type="number" id="phoneNumber" name="phoneNumber" required>
+
+            <p>Акси рангаи 3х4</p>
+            <div class="file-input-container">
+                <label for="photo3x4" class="file-input-button">Интихоби файл</label>
+                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">Файл интихоб нашудааст</span>
+            </div><br>
+
+            <p>Акси паспорт</p>
+            <div class="file-input-container">
+                <label for="idPhoto" class="file-input-button">Интихоби файл</label>
+                <input type="file" id="idPhoto" name="idPhoto" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">Файл интихоб нашудааст</span>
+            </div><br>
+
+            <p>Акси шумо бо паспорт - мушаххаскунии (идентификатсияи) фосилавӣ</p>
+            <div class="file-input-container">
+                <label for="idWithPhoto" class="file-input-button">Интихоби файл</label>
+                <input type="file" id="idWithPhoto" name="idWithPhoto" accept=".jpg, .jpeg, .png" class="file-input"
+                    required>
+                <span class="file-name">Файл интихоб нашудааст</span>
+            </div><br>
+
+            <div style="display:flex;">
+                <span style="color: red;"">
+                    *
+                </span>
+                <span style=" margin-right: 10px;">
+                    <input type="checkbox" name="accept" id="accept" required>
+                </span>
+                <label>
+                    Ман тасдиқ мекунам, ки ҳама маълумоти пешниҳодкардаам дуруст ва рузмарра аст
+                </label>
+            </div>
+
+            <button type="submit">Равона кардан</button>
+        </form>
+    </div>
+    <!-- <div id="popup" class="popup">
+        <p>Your form has been submitted!</p>
+        <button onclick="closePopup()">Close</button>
+    </div> -->
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
