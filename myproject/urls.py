@@ -23,8 +23,8 @@ from .views import download_media
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin_view'),
+    path('tj/', include('myapp.urls')),
     path('', include('myapp.urls')),
-    path('myapp/', include('myapp.urls')),
 
 ]
 

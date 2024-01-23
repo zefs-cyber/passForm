@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tj">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+</head>
+
+<body>
+    <div id="header">
+        <!-- Logo here -->
+        <img id="logo" src="{% static 'img/logo.png' %}" alt="Logo">
+        <div id="language-buttons">
+            <a href="{% url 'index' language='en' %}"><button>En</button></a>
+            <a href="{% url 'index' language='ru' %}"><button>Ru</button></a>
+            <a href="{% url 'index' language='tj' %}"><button>Tj</button></a>
+        </div>
+    </div>
+
+    <div id="customAlert" class="custom-alert">
+        <div class="alert-content">
+            <p id="alertMessage"></p>
+            <button onclick="closeCustomAlert()">Got it</button>
+        </div>
+    </div>
+    <div id="overlay" class="overlay"></div>
+
+    <div id="userForm">
+        <form enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
+            {% csrf_token %}
+            <label for="fullNameCyrillic">Full Name (Cyrillic):</label>
+            <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" placeholder="Давлатов Давлат Давлатович"
+                required>
+
+            <label for="fullNameLatin">Full Name (Latin):</label>
+            <input type="text" id="fullNameLatin" name="fullNameLatin" placeholder="Davlatov Davlat Davlatovich"
+                required>
+
+            <label for="birthdate">Date of Birth:</label><br>
+            <input type="date" id="birthdate" name="birthdate" required><br>
+
+            <label for="department">Department:</label>
+                <select id="department" name="department" required>
+                    <option value="факултети идоракунии давлат">Faculty of Public Administration</option>
+                    <option value="факултети хукукшиноси">Faculty of law</option>
+                    <option value="факултети дипломатия ва сиёсат">Faculty of diplomacy and politics</option>
+                    <option value="факултети тахсилоти фосилави ва тахсилоти дуюми олии касби">Faculty of Distance Education and Second Higher Professional Education</option>
+                    <option value="шуъбаи магистратура">Master's Department</option>
+                    <option value="магистратураи 'мактаби давлатдории Эмомали Рахмон'">Master's degree "Emomail Rahmon school of government"</option>
+                    <option value="шуъбаи омодакунии кадрхои илми ва илми-педагоги">Department of training of scientific and scientific-pedagogical personnel</option>
+                </select>
+
+
+            <label for="eduType">Type of Education:</label>
+            <select id="eduType" name="eduType" required>
+                <option value="Рӯзона">Daytime </option>
+                <option value="Ғоибона">In absentia</option>
+            </select>
+
+            <label for="studentCard">Student ID Card:</label>
+            <input type="number" id="studentCard" name="studentCard" required>
+
+            <label>Gender:</label><br>
+            <label for="male">Male
+                <input type="radio" id="male" name="gender" value="Male" required />
+            </label>
+
+            <label for="female">Female
+                <input type="radio" id="female" name="gender" value="Female" required />
+            </label>
+            <br>
+
+            <label for="issueDate">Passport issue date:</label><br>
+            <input type="date" id="issueDate" name="issueDate" required><br>
+
+            <label for="expiryDate">Passport expiry date:</label><br>
+            <input type="date" id="expiryDate" name="expiryDate" required><br>
+
+            <label for="passportNumber">Passport number:</label><br>
+            <input type="text" id="passportNumber" name="passportNumber" required>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required>
+            <br>
+
+            <label for="rma">ITN:</label>
+            <input type="number" id="rma" name="rma" required>
+
+            <label for="jobLocation">Passport issuing authority:</label>
+            <!-- <input type="text" id="jobLocation" name="jobLocation" required> -->
+            <select name="jobLocation" id="jobLocation" required>
+                <option value="РВКД дар шаҳри Душанбе">RCPD in Dushanbe</option>
+                <option value="ШВКД дар ноҳияи И.Сомонӣ">DCPD of I. Somoni</option>
+                <option value="ШВКД-1 дар ноҳияи Шоҳмансур">DCPD 1 in Shohmansur</option>
+                <option value="ШВКД-2 дар ноҳияи Шоҳмансур">DCPD 2 in Shohmansur</option>
+                <option value="ШВКД-1 дар ноҳияи Фирдавсӣ">DCPD 1 in Firdavsi</option>
+                <option value="ШВКД-2 дар ноҳияи Фирдавсӣ">DCPD 2 in Firdavsi</option>
+                <option value="ШВКД -1 дар ноҳияи Сино">DCPD 1 in Sino</option>
+                <option value="ШВКД -2 дар ноҳияи Сино">DCPD 2 in Sino</option>
+                <option value="ШВКД дар ноҳияи Варзоб">DCPD in Varzob</option>
+                <option value="ШВКД дар ноҳияи Ҳисор">DCPD in Hisor</option>
+                <option value="ШВКД дар ноҳияи Ваҳдат">DCPD in Vahdat</option>
+                <option value="ШВКД-1 дар ноҳияи Рӯдакӣ">DCPD 1 in Rudaki</option>
+                <option value="ШВКД-2 дар ноҳияи Рӯдакӣ">DCPD 2 in Rudaki</option>
+                <option value="ШВКД дар ноҳияи Турсунзода">DCPD in Tursunzoda</option>
+                <option value="ШВКД дар ноҳияи Шаҳринав">DCPD in Shahrinav</option>
+                <option value="ШВКД дар ноҳияи Файзобод">DCPD in Fayzobod</option>
+                <option value="ШВКД дар шаҳри Роғун">DCPD in Rogun</option>
+                <option value="РВКД дар вилояти Хатлон">RCPD in Khatlon</option>
+                <option value="ШВКД дар ш.Бохтар">DCPD in Shahr-e Bokhtar</option>
+                <option value="Қисми минтақавӣ оид ба гуруҳи ноҳияҳои Кӯлоб">Regional Subdivision for District Groups in
+                    Kulob</option>
+                <option value="ШВКД дар шаҳри Кӯлоб">DCPD in Kulob</option>
+                <option value="ШВКД дар ноҳияи А.Ҷомӣ">DCPD in A. Jomi</option>
+                <option value="ШВКД дар ноҳияи Балҷувон">DCPD in Baljuvon</option>
+                <option value="ШВКД дар ноҳияи Кӯшониён">DCPD in Kushoniyon</option>
+                <option value="ШВКД дар ноҳияи Вахш">DCPD in Vakhsh</option>
+                <option value="ШВКД дар ноҳияи Восеъ">DCPD in Vose'</option>
+                <option value="ШВКД дар ноҳияи Данғара">DCPD in Dangara</option>
+                <option value="ШВКД дар ноҳияи Ёвон">DCPD in Yovon</option>
+                <option value="ШВКД дар шаҳри Норак">DCPD in Norak</option>
+                <option value="ШВКД дар ноҳияи Панҷ">DCPD in Panj</option>
+                <option value="ШВКД дар ноҳияи Леваканд">DCPD in Levakand</option>
+                <option value="ШВКД дар ноҳияи Қубодиён">DCPD in Qubodiyon</option>
+                <option value="ШВКД дар ноҳияи Ҷайҳун">DCPD in Jayhun</option>
+                <option value="ШВКД дар ноҳияи Ҳамадонӣ">DCPD in Hamadoni</option>
+                <option value="ШВКД дар ноҳияи Муъминобод">DCPD in Muminobod</option>
+                <option value="ШВКД дар ноҳияи Н.Хусрав">DCPD in N. Khusrav</option>
+                <option value="ШВКД дар ноҳияи Темурмалик">DCPD in Temurmalik</option>
+                <option value="ШВКД дар ноҳияи Фархор">DCPD in Farkhor</option>
+                <option value="ШВКД дар ноҳияи Ховалинг">DCPD in Khovaling</option>
+                <option value="ШВКД дар ноҳияи Хуросон">DCPD in Khoroson</option>
+                <option value="ШВКД дар ноҳияи Ҷ.Балхӣ">DCPD in J. Balkhi</option>
+                <option value="ШВКД дар ноҳияи Дӯстӣ">DCPD in Dusti</option>
+                <option value="ШВКД дар ноҳияи Шаҳритус">DCPD in Shahritus</option>
+                <option value="ШВКД дар ноҳияи Ш.Шоҳин">DCPD in Sh. Shohin</option>
+                <option value="РВКД дар вилояти Суғд">RCPD in Sughd</option>
+                <option value="ШВКД дар шаҳри Хуҷанд">DCPD in Khujand</option>
+                <option value="ШВКД дар ноҳияи Айнӣ">DCPD in Ayni</option>
+                <option value="ШВКД дар ноҳияи Ашт">DCPD in Asht</option>
+                <option value="ШВКД дар ноҳияи Б.Ғафуров">DCPD in B. Gafurov</option>
+                <option value="ШВКД дар ноҳияи Гулистон">DCPD in Guliston</option>
+                <option value="ШВКД дар ноҳияи Ғончӣ">DCPD in Gonchi</option>
+                <option value="ШВКД дар ноҳияи Кӯҳистони Мастчоҳ">DCPD in Kohistani Mastcho</option>
+                <option value="ШВКД дар ноҳияи Мастчоҳ">DCPD in Mastcho</option>
+                <option value="ШВКД дар ноҳияи Ҷ.Расулов">DCPD in J. Rasulov</option>
+                <option value="ШВКД дар ноҳияи Исфара-1">DCPD in Isfara-1</option>
+                <option value="ШВКД дар ноҳияи Исфара-2">DCPD in Isfara-2</option>
+                <option value="ШВКД дар шаҳри Бӯстон">DCPD in Buston</option>
+                <option value="ШВКД дар ноҳияи Спитамен">DCPD in Spitamen</option>
+                <option value="ШВКД дар ноҳияи Истаравшан">DCPD in Istaravshan</option>
+                <option value="ШВКД дар ноҳияи Шаҳристон">DCPD in Shahriston</option>
+                <option value="ШВКД дар шаҳри Истиқлол">DCPD in Istiqlol</option>
+                <option value="ШВКД дар шаҳри Конибодом">DCPD in Konibodom</option>
+                <option value="ШВКД дар шаҳри Панҷакент">DCPD in Panjakent</option>
+                <option value="ШВКД дар ноҳияи Зафаробод">DCPD in Zaforabad</option>
+                <option value="РВКД дар ВМКБ">RCPD in VMKB</option>
+                <option value="ШВКД дар шаҳри Хоруғ">DCPD in Khorugh</option>
+                <option value="ШВКД дар ноҳияи Ванҷ">DCPD in Vanj</option>
+                <option value="ШВКД дар ноҳияи Дарвоз">DCPD in Darvoz</option>
+                <option value="ШВКД дар ноҳияи Ишкошим">DCPD in Ishkoshim</option>
+                <option value="ШВКД дар ноҳияи Мурғоб">DCPD in Murghob</option>
+                <option value="ШВКД дар ноҳияи Роштқалъа">DCPD in Roshtqala</option>
+                <option value="ШВКД дар ноҳияи Рушон">DCPD in Rushan</option>
+                <option value="ШВКД дар ноҳияи Шуғнон">DCPD in Shughnon</option>
+                <option value="РВКД дар минтақа ва ноҳияи Рашт">RCPD in Rasht Region</option>
+                <option value="ШВКД дар шаҳраки Навобод">DCPD in Navobod</option>
+                <option value="ШВКД дар ноҳияи Нуробод">DCPD in Nurobod</option>
+                <option value="ШВКД дар ноҳияи Сангвор">DCPD in Sangvor</option>
+                <option value="ШВКД дар ноҳияи Тоҷикобод">DCPD in Tajikabad</option>
+                <option value="ШВКД дар ноҳияи Лахш">DCPD in Lakhsh</option>
+                </select>
+
+                <label for="phoneNumber">Phone Number (without country code):</label>
+                <input type="number" id="phoneNumber" name="phoneNumber" required>
+
+                <p>Photo in 3x4 format</p>
+                <div class="file-input-container">
+                    <label for="photo3x4" class="file-input-button">Select File</label>
+                    <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input"
+                        required>
+                    <span class="file-name">File not selected</span>
+                </div><br>
+
+                <p>Passport Photo (front end)</p>
+                <div class="file-input-container">
+                    <label for="idPhotoFront" class="file-input-button">Select File</label>
+                    <input type="file" id="idPhotoFront" name="idPhotoFront" accept=".jpg, .jpeg, .png" class="file-input"
+                        required>
+                    <span class="file-name">File not selected</span>
+                </div><br>
+
+                <p>Passport Photo (rear end)</p>
+                <div class="file-input-container">
+                    <label for="idPhotoBack" class="file-input-button">Select File</label>
+                    <input type="file" id="idPhotoBack" name="idPhotoBack" accept=".jpg, .jpeg, .png" class="file-input"
+                        required>
+                    <span class="file-name">File not selected</span>
+                </div><br>
+
+                <p>Your Photo with Passport - Detailed Identification (ID)</p>
+                <div class="file-input-container">
+                    <label for="idWithPhoto" class="file-input-button">Select File</label>
+                    <input type="file" id="idWithPhoto" name="idWithPhoto" accept=".jpg, .jpeg, .png" class="file-input"
+                        required>
+                    <span class="file-name">File not selected</span>
+                </div><br>
+
+                <div style="display:flex;">
+                    <span style="color: red;">
+                        *
+                    </span>
+                    <span style="margin-right: 10px;">
+                        <input type="checkbox" name="accept" id="accept" required>
+                    </span>
+                    <label>
+                        I confirm that all the provided information is accurate and up-to-date.
+                    </label>
+                </div>
+
+                <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/scriptsen.js' %}"></script>
+</body>
+
+</html>

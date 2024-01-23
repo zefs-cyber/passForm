@@ -3,6 +3,31 @@ import os
 import zipfile
 from io import BytesIO
 from django.http import FileResponse
+import pandas as pd
+
+
+def delete_all_rows_except_header():
+
+    file_paths = [
+        'myproject\\myapp\\media\\form_data.xlsx',
+        'myproject\\myapp\\media\\student_data.xlsx'
+    ]
+
+    for file_path in file_paths:
+        try:
+            # Load the Excel file into a DataFrame
+            df = pd.read_excel(file_path, header=0)
+
+            # Keep only the header row
+            df = pd.DataFrame(columns=df.columns)
+
+            # Save the modified DataFrame back to the Excel file
+            df.to_excel(file_path, index=False)
+
+            print(f"All rows except header deleted in {file_path}")
+        except Exception as e:
+            print(f"Error processing {file_path}: {str(e)}")
+
 
 def download_media(request):
     # Define the base directory for media files
@@ -26,4 +51,7 @@ def download_media(request):
     # Create a FileResponse and return it for download
     response = FileResponse(zip_buffer, content_type='application/zip')
     response['Content-Disposition'] = 'attachment; filename=media_files.zip'
+    delete_all_rows_except_header()
     return response
+
+

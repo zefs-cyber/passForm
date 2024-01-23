@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='formdata',
             name='idPhoto',
-            field=models.ImageField(upload_to=myapp.models.custom_id_photo_filename),
+            field=models.ImageField(upload_to=myapp.models.custom_front_id_photo_filename),
         ),
         migrations.AlterField(
             model_name='formdata',

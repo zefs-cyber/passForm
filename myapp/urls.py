@@ -6,8 +6,7 @@ from django.conf import settings
 from myapp.views import download_media
 
 urlpatterns = [
-    path("",views.index,name='index'),
-    path('download_media/', download_media, name='myapp_download_media'),
-    # path("forms",views.content,name="forms"),
-    # path("forms",views,name="forms"),
+    path('', views.index, name='index'),
+    path('<str:language>/', views.index, name='index'),
+    path('admin/download_media/', download_media, name='myapp_download_media'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

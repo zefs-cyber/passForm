@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tj">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Form</title>
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+</head>
+
+<body>
+    <div id="header">
+        <!-- Logo here -->
+        <img id="logo" src="{% static 'img/logo.png' %}" alt="Logo">
+        <div id="language-buttons">
+            <a href="{% url 'index' language='en' %}"><button>En</button></a>
+            <a href="{% url 'index' language='ru' %}"><button>Ru</button></a>
+            <a href="{% url 'index' language='tj' %}"><button>Tj</button></a>
+        </div>
+    </div>
+
+    <div id="customAlert" class="custom-alert">
+        <div class="alert-content">
+            <p id="alertMessage"></p>
+            <button onclick="closeCustomAlert()">Понял</button>
+        </div>
+    </div>
+    <div id="overlay" class="overlay"></div>
+
+    <div id="userForm">
+        <form enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
+            {% csrf_token %}
+            <label for="fullNameCyrillic">Полное имя (кириллица):</label>
+            <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" placeholder="Давлатов Давлат Давлатович"
+                required>
+
+            <label for="fullNameLatin">Полное имя (латиница):</label>
+            <input type="text" id="fullNameLatin" name="fullNameLatin" placeholder="Davlatov Davlat Davlatovich"
+                required>
+
+            <label for="birthdate">Дата рождения:</label><br>
+            <input type="date" id="birthdate" name="birthdate" required><br>
+
+            <label for="department">Факультет:</label>
+                <select id="department" name="department" required>
+                <option value="факултети идоракунии давлат">Факультет государственного управления</option>
+                <option value="факултети хукукшиноси">Факультет права</option>
+                <option value="факултети дипломатия ва сиёсат">Факультет дипломатии и политики</option>
+                <option value="факултети тахсилоти фосилави ва тахсилоти дуюми олии касби">Факультет дистанционного образования и второго высшего профессионального образования</option>
+                <option value="шуъбаи магистратура">Магистратура</option>
+                <option value="магистратураи 'мактаби давлатдории Эмомали Рахмон'">Магистр «Школа государственного управления Эмомаила Рахмона»</option>
+                <option value="шуъбаи омодакунии кадрхои илми ва илми-педагоги">Отдел подготовки научных и научно-педагогических кадров</option>
+            </select>
+
+
+            <label for="eduType">Форма обучения:</label>
+            <select id="eduType" name="eduType" required>
+                <option value="Рӯзона">Очное </option>
+                <option value="Ғоибона">Заочное</option>
+            </select>
+
+            <label for="studentCard">Студенческая карта:</label>
+            <input type="number" id="studentCard" name="studentCard" required>
+
+            <label>Пол:</label><br>
+            <label for="male">Мужской
+                <input type="radio" id="male" name="gender" value="Male" required />
+            </label>
+
+            <label for="female">Женский
+                <input type="radio" id="female" name="gender" value="Female" required />
+            </label>
+            <br>
+
+            <label for="issueDate">Дата выдачи паспорта:</label><br>
+            <input type="date" id="issueDate" name="issueDate" required><br>
+
+            <label for="expiryDate">Дата истечения паспорта:</label><br>
+            <input type="date" id="expiryDate" name="expiryDate" required><br>
+
+            <label for="passportNumber">Номер паспорта:</label><br>
+            <input type="text" id="passportNumber" name="passportNumber" required>
+
+            <label for="address">Адрес:</label>
+            <input type="text" id="address" name="address" required>
+            <br>
+
+            <label for="rma">ИНН:</label>
+            <input type="number" id="rma" name="rma" required>
+
+            <label for="jobLocation">Орган выдачи паспорта:</label>
+            <!-- <input type="text" id="jobLocation" name="jobLocation" required> -->
+            <select name="jobLocation" id="jobLocation" required>
+                <option value="РВКД дар шаҳри Душанбе">УМВД в городе Душанбе</option>
+                <option value="ШВКД дар ноҳияи И.Сомонӣ">ОМВД в районе И.Сомони</option>
+                <option value="ШВКД-1 дар ноҳияи Шоҳмансур">ОМВД-1 в районе Шохмансур</option>
+                <option value="ШВКД-2 дар ноҳияи Шоҳмансур">ОМВД-2 в районе Шохмансур</option>
+                <option value="ШВКД-1 дар ноҳияи Фирдавсӣ">ОМВД-1 в районе Фирдавси</option>
+                <option value="ШВКД-2 дар ноҳияи Фирдавсӣ">ОМВД-2 в районе Фирдавси</option>
+                <option value="ШВКД -1 дар ноҳияи Сино">ОМВД-1 в районе Сино</option>
+                <option value="ШВКД -2 дар ноҳияи Сино">ОМВД-2 в районе Сино</option>
+                <option value="ШВКД дар ноҳияи Варзоб">ОМВД в районе Варзоб</option>
+                <option value="ШВКД дар ноҳияи Ҳисор">ОМВД в районе Ҳисор</option>
+                <option value="ШВКД дар ноҳияи Ваҳдат">ОМВД в районе Вахдат</option>
+                <option value="ШВКД-1 дар ноҳияи Рӯдакӣ">ОМВД-1 в районе Рудаки</option>
+                <option value="ШВКД-2 дар ноҳияи Рӯдакӣ">ОМВД-2 в районе Рудаки</option>
+                <option value="ШВКД дар ноҳияи Турсунзода">ОМВД в районе Турсунзода</option>
+                <option value="ШВКД дар ноҳияи Шаҳринав">ОМВД в районе Шаҳринав</option>
+                <option value="ШВКД дар ноҳияи Файзобод">ОМВД в районе Файзобод</option>
+                <option value="ШВКД дар шаҳри Роғун">ОМВД в городе Роғун</option>
+                <option value="РВКД дар вилояти Хатлон">УМВД в области Хатлон</option>
+                <option value="ШВКД дар ш.Бохтар">ОМВД в городе Бохтар</option>
+                <option value="Қисми минтақавӣ оид ба гуруҳи ноҳияҳои Кӯлоб">Часть региона, относящаяся к районам Куляб
+                </option>
+                <option value="ШВКД дар шаҳри Кӯлоб">ОМВД в городе Куляб</option>
+                <option value="ШВКД дар ноҳияи А.Ҷомӣ">ОМВД в районе А.Ҷомӣ</option>
+                <option value="ШВКД дар ноҳияи Балҷувон">ОМВД в районе Балҷувон</option>
+                <option value="ШВКД дар ноҳияи Кӯшониён">ОМВД в районе Кӯшониён</option>
+                <option value="ШВКД дар ноҳияи Вахш">ОМВД в районе Вахш</option>
+                <option value="ШВКД дар ноҳияи Восеъ">ОМВД в районе Восеъ</option>
+                <option value="ШВКД дар ноҳияи Данғара">ОМВД в районе Данғара</option>
+                <option value="ШВКД дар ноҳияи Ёвон">ОМВД в районе Ёвон</option>
+                <option value="ШВКД дар шаҳри Норак">ОМВД в городе Норак</option>
+                <option value="ШВКД дар ноҳияи Панҷ">ОМВД в районе Панҷ</option>
+                <option value="ШВКД дар ноҳияи Леваканд">ОМВД в районе Леваканд</option>
+                <option value="ШВКД дар ноҳияи Қубодиён">ОМВД в районе Қубодиён</option>
+                <option value="ШВКД дар ноҳияи Ҷайҳун">ОМВД в районе Ҷайҳун</option>
+                <option value="ШВКД дар ноҳияи Ҳамадонӣ">ОМВД в районе Ҳамадонӣ</option>
+                <option value="ШВКД дар ноҳияи Муъминобод">ОМВД в районе Муъминобод</option>
+                <option value="ШВКД дар ноҳияи Н.Хусрав">ОМВД в районе Н.Хусрав</option>
+                <option value="ШВКД дар ноҳияи Темурмалик">ОМВД в районе Темурмалик</option>
+                <option value="ШВКД дар ноҳияи Фархор">ОМВД в районе Фархор</option>
+                <option value="ШВКД дар ноҳияи Ховалинг">ОМВД в районе Ховалинг</option>
+                <option value="ШВКД дар ноҳияи Хуросон">ОМВД в районе Хуросон</option>
+                <option value="ШВКД дар ноҳияи Ҷ.Балхӣ">ОМВД в районе Ҷ.Балхӣ</option>
+                <option value="ШВКД дар ноҳияи Дӯстӣ">ОМВД в районе Дӯстӣ</option>
+                <option value="ШВКД дар ноҳияи Шаҳритус">ОМВД в районе Шаҳритус</option>
+                <option value="ШВКД дар ноҳияи Ш.Шоҳин">ОМВД в районе Ш.Шоҳин</option>
+                <option value="РВКД дар вилояти Суғд">УМВД в области Суғд</option>
+                <option value="ШВКД дар шаҳри Хуҷанд">ОМВД в городе Хуҷанд</option>
+                <option value="ШВКД дар ноҳияи Айнӣ">ОМВД в районе Айнӣ</option>
+                <option value="ШВКД дар ноҳияи Ашт">ОМВД в районе Ашт</option>
+                <option value="ШВКД дар ноҳияи Б.Ғафуров">ОМВД в районе Б.Ғафуров</option>
+                <option value="ШВКД дар ноҳияи Гулистон">ОМВД в районе Гулистон</option>
+                <option value="ШВКД дар ноҳияи Ғончӣ">ОМВД в районе Ғончӣ</option>
+                <option value="ШВКД дар ноҳияи Кӯҳистони Мастчоҳ">ОМВД в районе Кӯҳистони Мастчоҳ</option>
+                <option value="ШВКД дар ноҳияи Мастчоҳ">ОМВД в районе Мастчоҳ</option>
+                <option value="ШВКД дар ноҳияи Ҷ.Расулов">ОМВД в районе Ҷ.Расулов</option>
+                <option value="ШВКД дар ноҳияи Исфара-1">ОМВД в районе Исфара-1</option>
+                <option value="ШВКД дар ноҳияи Исфара-2">ОМВД в районе Исфара-2</option>
+                <option value="ШВКД дар шаҳри Бӯстон">ОМВД в городе Бӯстон</option>
+                <option value="ШВКД дар ноҳияи Спитамен">ОМВД в районе Спитамен</option>
+                <option value="ШВКД дар ноҳияи Истаравшан">ОМВД в районе Истаравшан</option>
+                <option value="ШВКД дар ноҳияи Шаҳристон">ОМВД в районе Шаҳристон</option>
+                <option value="ШВКД дар шаҳри Истиқлол">ОМВД в городе Истиқлол</option>
+                <option value="ШВКД дар шаҳри Конибодом">ОМВД в городе Конибодом</option>
+                <option value="ШВКД дар шаҳри Панҷакент">ОМВД в городе Панҷакент</option>
+                <option value="ШВКД дар ноҳияи Зафаробод">ОМВД в районе Зафаробод</option>
+                <option value="РВКД дар ВМКБ">УМВД в ВМКБ</option>
+                <option value="ШВКД дар шаҳри Хоруғ">ОМВД в городе Хоруғ</option>
+                <option value="ШВКД дар ноҳияи Ванҷ">ОМВД в районе Ванҷ</option>
+                <option value="ШВКД дар ноҳияи Дарвоз">ОМВД в районе Дарвоз</option>
+                <option value="ШВКД дар ноҳияи Ишкошим">ОМВД в районе Ишкошим</option>
+                <option value="ШВКД дар ноҳияи Мурғоб">ОМВД в районе Мурғоб</option>
+                <option value="ШВКД дар ноҳияи Роштқалъа">ОМВД в районе Роштқалъа</option>
+                <option value="ШВКД дар ноҳияи Рушон">ОМВД в районе Рушон</option>
+                <option value="ШВКД дар ноҳияи Шуғнон">ОМВД в районе Шуғнон</option>
+                <option value="РВКД дар минтақа ва ноҳияи Рашт">УМВД в области и районе Рашт</option>
+                <option value="ШВКД дар шаҳраки Навобод">ОМВД в городке Навобод</option>
+                <option value="ШВКД дар ноҳияи Нуробод">ОМВД в районе Нуробод</option>
+                <option value="ШВКД дар ноҳияи Сангвор">ОМВД в районе Сангвор</option>
+                <option value="ШВКД дар ноҳияи Тоҷикобод">ОМВД в районе Тоҷикобод</option>
+                <option value="ШВКД дар ноҳияи Лахш">ОМВД в районе Лахш</option>
+            </select>
+
+            <label for="phoneNumber">Номер телефона (без кода страны):</label>
+            <input type="number" id="phoneNumber" name="phoneNumber" required>
+
+            <p>Цветное фото 3х4</p>
+            <div class="file-input-container">
+                <label for="photo3x4" class="file-input-button">
+                    Выберите файл</label>
+                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">
+                    Файл не выбран</span>
+            </div><br>
+
+            <p>Фото паспорта (передняя часть)</p>
+            <div class="file-input-container">
+                <label for="idPhotoFront" class="file-input-button">Выберите файл</label>
+                <input type="file" id="idPhotoFront" name="idPhotoFront" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">Файл не выбран</span>
+            </div><br>
+
+            <p>Фото паспорта (задняя часть)</p>
+            <div class="file-input-container">
+                <label for="idPhotoBack" class="file-input-button">Выберите файл</label>
+                <input type="file" id="idPhotoBack" name="idPhotoBack" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">Файл не выбран</span>
+            </div><br>
+
+            <p>
+                Фотография в паспорте - дистанционная идентификация</p>
+            <div class="file-input-container">
+                <label for="idWithPhoto" class="file-input-button">Выберите файл</label>
+                <input type="file" id="idWithPhoto" name="idWithPhoto" accept=".jpg, .jpeg, .png" class="file-input"
+                    required>
+                <span class="file-name">Файл не выбран</span>
+            </div><br>
+
+            <div style="display:flex;">
+                <span style="color: red;"">
+                    *
+                </span>
+                <span style=" margin-right: 10px;">
+                    <input type="checkbox" name="accept" id="accept" required>
+                </span>
+                <label>
+
+                    Я подтверждаю, что вся предоставленная мною информация верна и актуальна.
+                </label>
+            </div>
+
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/scriptsru.js' %}"></script>
+</body>
+
+</html>

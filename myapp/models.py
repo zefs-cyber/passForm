@@ -5,8 +5,11 @@ import os
 def custom_photo_filename(instance, filename):
     return os.path.join('3x4', f'{instance.fullNameCyrillic}_photo3x4.jpg')
 
-def custom_id_photo_filename(instance, filename):
-    return os.path.join('passport', f'{instance.fullNameCyrillic}_idPhoto.jpg')
+def custom_back_id_photo_filename(instance, filename):
+    return os.path.join('passportFront', f'{instance.fullNameCyrillic}_idPhotoFront.jpg')
+
+def custom_front_id_photo_filename(instance, filename):
+    return os.path.join('passportBack', f'{instance.fullNameCyrillic}_idPhotoBack.jpg')
 
 def custom_id_with_photo_filename(instance, filename):
     return os.path.join('selfie', f'{instance.fullNameCyrillic}_idWithPhoto.jpg')
@@ -24,15 +27,14 @@ class FormData(models.Model):
     ]
 
     DEPARTMENT_CHOICES = [
-        ('Миёна', 'Миёна'),
-        ('Миёнаи махсус', 'Миёнаи махсус'),
-        ('Олӣ (бакалавр)', 'Олӣ (бакалавр)'),
-        ('Олӣ (мутахассис)', 'Олӣ (мутахассис)'),
-        ('Магистр', 'Магистр'),
-        ('Номзади илм', 'Номзади илм'),
-        ('Доктор PhD', 'Доктор PhD'),
-        ('Доктори илм', 'Доктори илм')
-        ]
+        ('факултети идоракунии давлат', 'факултети идоракунии давлат'),
+        ('факултети хукукшиноси', 'факултети хукукшиноси'),
+        ('факултети дипломатия ва сиёсат', 'факултети дипломатия ва сиёсат'),
+        ('факултети тахсилоти фосилави ва тахсилоти дуюми олии касби', 'факултети тахсилоти фосилави ва тахсилоти дуюми олии касби'),
+        ('шуъбаи магистратура', 'шуъбаи магистратура'),
+        ('магистратураи "мактаби давлатдории Эмомали Рахмон"', 'магистратураи "мактаби давлатдории Эмомали Рахмон"'),
+        ('шуъбаи омодакунии кадрхои илми ва илми-педагоги', 'шуъбаи омодакунии кадрхои илми ва илми-педагоги'),
+    ]
     
     EDU_TYPE_CHOICES = [
         ('Рӯзона','Рӯзона'),
@@ -132,11 +134,12 @@ class FormData(models.Model):
     expiryDate = models.DateField()
     passportNumber = models.CharField(max_length=255)
     address = models.TextField()
-    rma = models.IntegerField()
+    rma = models.CharField(max_length=9)
     jobLocation = models.CharField(max_length=255, choices=JOB_LOCATION_CHOICES)
     phoneNumber = models.CharField(max_length=255)
     photo3x4 = models.ImageField(upload_to=custom_photo_filename)
-    idPhoto = models.ImageField(upload_to=custom_id_photo_filename)
+    idPhotoFront = models.ImageField(upload_to=custom_front_id_photo_filename)
+    idPhotoBack = models.ImageField(upload_to=custom_back_id_photo_filename)
     idWithPhoto = models.ImageField(upload_to=custom_id_with_photo_filename)
 
 

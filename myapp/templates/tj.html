@@ -14,6 +14,11 @@
     <div id="header">
         <!-- Logo here -->
         <img id="logo" src="{% static 'img/logo.png' %}" alt="Logo">
+        <div id="language-buttons">
+            <a href="{% url 'index' language='en' %}"><button>En</button></a>
+            <a href="{% url 'index' language='ru' %}"><button>Ru</button></a>
+            <a href="{% url 'index' language='tj' %}"><button>Tj</button></a>
+        </div>
     </div>
 
     <div id="customAlert" class="custom-alert">
@@ -28,25 +33,30 @@
         <form enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
             {% csrf_token %}
             <label for="fullNameCyrillic">Номи пурра (кирилӣ):</label>
-            <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" required>
+            <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" placeholder="Давлатов Давлат Давлатович"
+                required>
 
             <label for="fullNameLatin">Номи пурра (лотинӣ):</label>
-            <input type="text" id="fullNameLatin" name="fullNameLatin" required>
+            <input type="text" id="fullNameLatin" name="fullNameLatin" placeholder="Davlatov Davlat Davlatovich"
+                required>
 
-            <label for="birthdate">Санаи таваллуд:</label>
-            <input type="date" id="birthdate" name="birthdate" required>
+            <label for="birthdate">Санаи таваллуд:</label><br>
+            <input type="date" id="birthdate" name="birthdate" required><br>
 
-            <label for="department">Маълумот:</label>
+            <label for="department">Факултет:</label>
             <select id="department" name="department" required>
-                <option value="Миёна">Миёна</option>
-                <option value="Миёнаи махсус">Миёнаи махсус</option>
-                <option value="Олӣ (бакалавр)">Олӣ (бакалавр)</option>
-                <option value="Олӣ (мутахассис)">Олӣ (мутахассис)</option>
-                <option value="Магистр">Магистр</option>
-                <option value="Номзади илм">Номзади илм</option>
-                <option value="Доктор PhD">Доктор PhD</option>
-                <option value="Доктори илм">Доктори илм</option>
+                <option value="факултети идоракунии давлат">Факултети идоракунии давлатӣ</option>
+                <option value="факултети хукукшиноси">Факултети ҳуқуқшиносӣ</option>
+                <option value="факултети дипломатия ва сиёсат">Факултети дипломатия ва сиёсат</option>
+                <option value="факултети тахсилоти фосилави ва тахсилоти дуюми олии касби">Факултети таҳсилоти фосилавӣ
+                    ва таҳсилоти дуюми олии касбӣ</option>
+                <option value="шуъбаи магистратура">Шуъбаи магистратура</option>
+                <option value="магистратураи 'мактаби давлатдории Эмомали Рахмон'">Магистратураи 'мактаби давлатдории
+                    Эмомалӣ Рахмон'</option>
+                <option value="шуъбаи омодакунии кадрхои илми ва илми-педагоги">Шуъбаи омодакунии кадрҳои илмӣ ва
+                    илмӣ-педагогӣ</option>
             </select>
+
 
             <label for="eduType">Шакли таҳсил:</label>
             <select id="eduType" name="eduType" required>
@@ -58,22 +68,22 @@
             <input type="number" id="studentCard" name="studentCard" required>
 
             <label>Ҷинс:</label><br>
-            <label for="male">Male
+            <label for="male">Мард
                 <input type="radio" id="male" name="gender" value="Male" required />
             </label>
 
-            <label for="female">Female
+            <label for="female">Зан
                 <input type="radio" id="female" name="gender" value="Female" required />
             </label>
             <br>
 
-            <label for="issueDate">Оғози эътибор:</label>
-            <input type="date" id="issueDate" name="issueDate" required>
+            <label for="issueDate">Оғози эътибори шиноснома:</label><br>
+            <input type="date" id="issueDate" name="issueDate" required><br>
 
-            <label for="expiryDate">Анҷоми эътибор:</label>
-            <input type="date" id="expiryDate" name="expiryDate" required>
+            <label for="expiryDate">Анҷоми эътибори шиноснома:</label><br>
+            <input type="date" id="expiryDate" name="expiryDate" required><br>
 
-            <label for="passportNumber">Рақами шиноснома:</label>
+            <label for="passportNumber">Рақами шиноснома:</label><br>
             <input type="text" id="passportNumber" name="passportNumber" required>
 
             <label for="address">Нишонӣ:</label>
@@ -105,7 +115,8 @@
                 <option value="ШВКД дар шаҳри Роғун">ШВКД дар шаҳри Роғун</option>
                 <option value="РВКД дар вилояти Хатлон">РВКД дар вилояти Хатлон</option>
                 <option value="ШВКД дар ш.Бохтар">ШВКД дар ш.Бохтар</option>
-                <option value="Қисми минтақавӣ оид ба гуруҳи ноҳияҳои Кӯлоб">Қисми минтақавӣ оид ба гуруҳи ноҳияҳои Кӯлоб</option>
+                <option value="Қисми минтақавӣ оид ба гуруҳи ноҳияҳои Кӯлоб">Қисми минтақавӣ оид ба гуруҳи ноҳияҳои
+                    Кӯлоб</option>
                 <option value="ШВКД дар шаҳри Кӯлоб">ШВКД дар шаҳри Кӯлоб</option>
                 <option value="ШВКД дар ноҳияи А.Ҷомӣ">ШВКД дар ноҳияи А.Ҷомӣ</option>
                 <option value="ШВКД дар ноҳияи Балҷувон">ШВКД дар ноҳияи Балҷувон</option>
@@ -177,10 +188,17 @@
                 <span class="file-name">Файл интихоб нашудааст</span>
             </div><br>
 
-            <p>Акси паспорт</p>
+            <p>Акси паспорт(қисмати пеш)</p>
             <div class="file-input-container">
-                <label for="idPhoto" class="file-input-button">Интихоби файл</label>
-                <input type="file" id="idPhoto" name="idPhoto" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <label for="idPhotoFront" class="file-input-button">Интихоби файл</label>
+                <input type="file" id="idPhotoFront" name="idPhotoFront" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">Файл интихоб нашудааст</span>
+            </div><br>
+
+            <p>Акси паспорт(қисмати ақиб)</p>
+            <div class="file-input-container">
+                <label for="idPhotoBack" class="file-input-button">Интихоби файл</label>
+                <input type="file" id="idPhotoBack" name="idPhotoBack" accept=".jpg, .jpeg, .png" class="file-input" required>
                 <span class="file-name">Файл интихоб нашудааст</span>
             </div><br>
 
@@ -207,11 +225,8 @@
             <button type="submit">Равона кардан</button>
         </form>
     </div>
-    <!-- <div id="popup" class="popup">
-        <p>Your form has been submitted!</p>
-        <button onclick="closePopup()">Close</button>
-    </div> -->
-    <script src="{% static 'js/script.js' %}"></script>
+
+    <script src="{% static 'js/scriptstj.js' %}"></script>
 </body>
 
 </html>

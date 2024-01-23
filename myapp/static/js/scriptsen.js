@@ -1,11 +1,11 @@
 document.getElementById('photo3x4').addEventListener('change', updateFileName);
-document.getElementById('idPhoto').addEventListener('change', updateFileName);
+document.getElementById('idPhotoFront').addEventListener('change', updateFileName);
+document.getElementById('idPhotoBack').addEventListener('change', updateFileName);
 document.getElementById('idWithPhoto').addEventListener('change', updateFileName);
-
 
 function updateFileName() {
     var fileName = this.value.split('\\').pop();
-    this.parentElement.querySelector('.file-name').innerText = fileName || 'Файл интихоб нашудааст';
+    this.parentElement.querySelector('.file-name').innerText = fileName || 'File not selected';
 }
 
 function submitForm() {
@@ -23,7 +23,8 @@ function submitForm() {
         jobLocation: document.getElementById('jobLocation').value,
         phoneNumber: document.getElementById('phoneNumber').value,
         photo3x4: document.getElementById('photo3x4').files[0],
-        idPhoto: document.getElementById('idPhoto').files[0],
+        idPhotoFront: document.getElementById('idPhotoFront').files[0],
+        idPhotoBack: document.getElementById('idPhotoBack').files[0],
         idWithPhoto: document.getElementById('idWithPhoto').files[0]
     };
 
@@ -42,7 +43,6 @@ function closeCustomAlert() {
 }
 
 function validateForm() {
-
     // Add your validation logic here
     var fullNameCyrillic = document.getElementById('fullNameCyrillic').value;
     var fullNameLatin = document.getElementById('fullNameLatin').value;
@@ -53,7 +53,6 @@ function validateForm() {
     var rma = document.getElementById('rma').value;
     var phoneNumber = document.getElementById('phoneNumber').value;
     var address = document.getElementById('address').value;
-
 
     var fullNameCyrillicElement = document.getElementById('fullNameCyrillic');
     var fullNameLatinElement = document.getElementById('fullNameLatin');
@@ -66,13 +65,11 @@ function validateForm() {
     var addressElement = document.getElementById('address');
 
     var isValid = true;
-    var alertString = "Диккат:";
-
-
+    var alertString = "Attention:";
 
     // Check if fullNameCyrillic contains only Cyrillic letters
     if (!/^[а-яА-Я\s]+$/.test(fullNameCyrillic.trim())) {
-        alertString = alertString.concat("\n", 'Номи пурра (кирилӣ) танҳо бо ҳарфҳои кирилӣ');
+        alertString = alertString.concat("\n", 'Full name (Cyrillic) should only contain Cyrillic letters');
         fullNameCyrillicElement.style.borderColor = 'red';
         fullNameCyrillicElement.style.borderWidth = '5px';
         isValid = false; // Prevent form submission
@@ -83,10 +80,9 @@ function validateForm() {
 
     // Check if fullNameLatin contains only Latin letters
     if (!/^[a-zA-Z\s]+$/.test(fullNameLatin.trim())) {
-        alertString = alertString.concat("\n", 'Номи пурра (лотинӣ) танҳо бо ҳарфҳои лотинӣ');
+        alertString = alertString.concat("\n", 'Full name (Latin) should only contain Latin letters');
         fullNameLatinElement.style.borderColor = 'red';
         fullNameLatinElement.style.borderWidth = '5px';
-
         isValid = false; // Prevent form submission
     } else {
         fullNameLatinElement.style.borderColor = '';
@@ -113,7 +109,7 @@ function validateForm() {
 
     // Check if the person is above 18
     if (age < 18) {
-        alertString = alertString.concat("\n", 'Барои идома додан шумо бояд 18 сола ё калонтар бошед');
+        alertString = alertString.concat("\n", 'To proceed, you must be 18 years or older');
         birthdateElement.style.borderColor = 'red';
         birthdateElement.style.borderWidth = '5px';
         isValid = false; // Prevent form submission
@@ -123,24 +119,21 @@ function validateForm() {
     }
 
     // Validate RMA
-
     if (!/^\d{9}$/.test(rma.trim())) {
         rmaElement.style.borderColor = 'red';
         rmaElement.style.borderWidth = '5px';
-        alertString = alertString.concat("\n", 'РМА бояд аз 9 рақам иборат бошад');
+        alertString = alertString.concat("\n", 'ITN should be a 9-digit number');
         isValid = false; // Prevent form submission
     } else {
         rmaElement.style.borderColor = '';
         rmaElement.style.borderWidth = '1px';
     }
 
-
     // Validate phoneNumber
     if (!/^\d{9}$/.test(phoneNumber.trim())) {
         phoneNumberElement.style.borderColor = 'red';
         phoneNumberElement.style.borderWidth = '5px';
-        alertString = alertString.concat("\n", 'Рақами телефон бояд аз 9 рақам иборат бошад');
-
+        alertString = alertString.concat("\n", 'Phone number should be a 9-digit number');
         isValid = false; // Prevent form submission
     } else {
         phoneNumberElement.style.borderColor = '';
@@ -149,7 +142,7 @@ function validateForm() {
 
     // validate passport number
     if (!/^[AА]\d{8}$/.test(passportNumber.trim())) {
-        alertString = alertString.concat("\n", 'Рақами шиноснома бояд бо "A" оғоз шавад ва аз 8 рақам иборат бошад');
+        alertString = alertString.concat("\n", 'Passport number should start with "A" and be followed by 8 digits');
         passportNumberElement.style.borderColor = 'red';
         passportNumberElement.style.borderWidth = '5px';
         isValid = false; // Prevent form submission
@@ -159,15 +152,13 @@ function validateForm() {
     }
 
     if (!/^[а-яА-Я0-9\s'.,\/\\]+$/.test(address.trim())) {
-        alertString = alertString.concat("\n", 'Нишона танҳо бояд аз ҳарфҳои кирилӣ, ракамхо, ва символҳои \', . / \\ иборат бошад');
+        alertString = alertString.concat("\n", 'Address should only contain Cyrillic letters, numbers, and the following symbols: \', . / \\');
         addressElement.style.borderColor = 'red';
         addressElement.style.borderWidth = '5px';
         isValid = false; // Prevent form submission
-        console.log('False validation')
     } else {
         addressElement.style.borderColor = '';
         addressElement.style.borderWidth = '1px';
-        console.log('True validation')
     }
 
     // Convert attentionDate and completionDate to Date objects
@@ -181,7 +172,7 @@ function validateForm() {
     if (completionDateObj > currentDate) {
         completionDateElement.style.borderColor = 'red';
         completionDateElement.style.borderWidth = '5px';
-        alertString = alertString.concat("\n", 'Санаи дурустро ворид кунед');
+        alertString = alertString.concat("\n", 'Please enter a valid passport expiry date');
         isValid = false; // Prevent form submission
     } else {
         completionDateElement.style.borderColor = '';
@@ -208,7 +199,7 @@ function validateForm() {
         completionDateElement.style.borderWidth = '1px';
     } else {
         // Invalid case
-        alertString = alertString.concat("\n", 'Фарқи байни санаи  ва санаи оғози эътибор ва анҷоми эътибор бояд 10 сол бошад');
+        alertString = alertString.concat("\n", 'The difference between the issue date and expiry date of passport must be at least 10 years');
         attentionDateElement.style.borderColor = 'red';
         attentionDateElement.style.borderWidth = '5px';
         completionDateElement.style.borderColor = 'red';

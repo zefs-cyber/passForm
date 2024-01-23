@@ -13,10 +13,26 @@ body {
     align-items: center;
     width: 100%;
     position: relative;
-    padding: 30px;
+    padding: 10px;
+    /* Reduce padding for a more compact header */
     box-sizing: border-box;
     color: white;
     box-shadow: 0 10px 16px -6px rgba(0, 0, 0, 0.2);
+}
+
+#language-buttons {
+    display: flex;
+    gap: 5px;
+    /* Adjust the space between buttons as needed */
+}
+
+#language-buttons button {
+    flex: 1;
+    /* Make the buttons share equal width */
+    font-size: 12px;
+    /* Adjust the font size as needed */
+    padding: 5px 8px;
+    /* Adjust the padding as needed */
 }
 
 #accept-container {
@@ -26,13 +42,13 @@ body {
 #accept-container span {
     display: inline-block;
     vertical-align: middle;
-    margin-right: 5px; /* Adjust the margin as needed */
+    margin-right: 5px;
+    /* Adjust the margin as needed */
 }
 
 #logo {
-    max-width: 150px;
-
-    /* Set a maximum width for the logo */
+    max-width: 130px;
+    /* Adjust the max-width of the logo */
 }
 
 #userForm {
@@ -43,7 +59,6 @@ body {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 50px;
-    /* Adjust the margin as needed */
 }
 
 label {
@@ -57,12 +72,12 @@ button,
 [type="file"],
 [type="radio"] {
     width: 100%;
-    padding: 10px; /* Increased padding */
+    padding: 10px;
     margin-bottom: 15px;
     box-sizing: border-box;
-    border: 1px solid #5fa8f0; /* Border color */
-    background-color: #f5faff; /* Background color */
-    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #5fa8f0;
+    background-color: #f5faff;
+    border-radius: 5px;
 }
 
 [type="radio"] {
@@ -86,10 +101,9 @@ button {
     position: relative;
     overflow: hidden;
     display: inline-block;
-    margin-bottom: 15px; /* Adjust margin as needed */
+    margin-bottom: 15px;
 }
 
-/* Style for the custom button */
 .file-input-button {
     background-color: #5fa8f0;
     color: white;
@@ -97,51 +111,22 @@ button {
     border: none;
     cursor: pointer;
     display: inline-block;
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 5px;
 }
 
-/* Style for the hidden file input */
 .file-input {
     position: absolute;
     top: 0;
     left: 0;
     font-size: 100px;
-    /* Set a large font size to cover the button */
     opacity: 0;
     cursor: pointer;
 }
 
-/* Style for displaying the selected file name */
 .file-name {
     margin-top: 5px;
     display: inline-block;
 }
-
-/* .popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 999;
-}
-
-.popup p {
-    margin: 0 0 10px;
-}
-
-.popup button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-} */
-
 
 .custom-alert {
     display: none;
@@ -164,14 +149,13 @@ button {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Set a higher z-index than the custom-alert */
+    z-index: 999;
 }
 
 .alert-content {
     text-align: center;
 }
 
-/* Style your button */
 button {
     padding: 10px 20px;
     background-color: #007bff;
@@ -189,29 +173,95 @@ select:focus,
 [type="file"]:focus,
 [type="radio"]:focus {
     outline: none;
-    border-color: #5fa8f0; /* Border color when focused */
-    box-shadow: 0 0 5px rgba(95, 168, 240, 0.8); /* Box shadow when focused */
-    background-color: #edf5ff; /* Background color when focused */
+    border-color: #5fa8f0;
+    box-shadow: 0 0 5px rgba(95, 168, 240, 0.8);
+    background-color: #edf5ff;
 }
 
-/* Style for file input when focused */
-.file-input:focus + .file-input-button {
-    border-color: #5fa8f0; /* Border color when focused */
-    box-shadow: 0 0 5px rgba(95, 168, 240, 0.8); /* Box shadow when focused */
-    background-color: #5fa8f0; /* Background color when focused */
+.file-input:focus+.file-input-button {
+    border-color: #5fa8f0;
+    box-shadow: 0 0 5px rgba(95, 168, 240, 0.8);
+    background-color: #5fa8f0;
     color: white;
 }
 
-/* Style for radio buttons when focused */
 [type="radio"]:focus {
     outline: none;
-    box-shadow: 0 0 5px rgba(95, 168, 240, 0.8); /* Box shadow when focused */
+    box-shadow: 0 0 5px rgba(95, 168, 240, 0.8);
 }
 
-/* Responsive styles */
+input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 10px;
+    border: 1px solid #5fa8f0;
+    background-color: #f5faff;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+select {
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 10px;
+    border: 1px solid #5fa8f0;
+    background-color: #f5faff;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+
+.custom-scs {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    border-radius: 20px;
+}
+
+.overlay-scs {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.scs-content {
+    text-align: center;
+}
+
+.buttonscs {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.buttonscs:hover {
+    background-color: #0056b3;
+}
+
 @media only screen and (max-width: 600px) {
     #userForm {
         padding: 30px;
         margin: 20px;
     }
 }
+
