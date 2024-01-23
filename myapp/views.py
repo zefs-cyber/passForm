@@ -160,7 +160,7 @@ def download_media(request):
     response['Content-Disposition'] = 'attachment; filename=media_files.zip'
     # delete_all_rows_except_header()
     # delete_contents_of_subfolders(media_base_dir)
-    print('All Data has been downloaded and erased from memory')
+    print('All Data has been downloaded')
     # queryset = FormData.objects.all()
     # queryset.delete()
     return response

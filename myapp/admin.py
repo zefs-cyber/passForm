@@ -24,15 +24,15 @@ class FormDataAdmin(admin.ModelAdmin):
 
     def get_actions(self, request):
         actions = super().get_actions(request)
-        custom_actions = {
-            'download_media': (  # Corrected key to match the action name
-                self.download_media_view,
-                'download_media',  # Short description
-                'Download selected media files',  # Long description
-            ),
-        }
-        actions.clear()
-        actions.update(custom_actions)
+        # custom_actions = {
+        #     'download_media': (  # Corrected key to match the action name
+        #         self.download_media_view,
+        #         'download_media_view',  # Short description
+        #         'Download selected media files',  # Long description
+        #     ),
+        # }
+        # actions.clear()
+        # actions.update(custom_actions)
         return actions
 
     
