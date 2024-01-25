@@ -34,7 +34,3 @@ class FormDataAdmin(admin.ModelAdmin):
         # actions.clear()
         # actions.update(custom_actions)
         return actions
-
-    
-
-
