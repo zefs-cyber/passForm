@@ -32,6 +32,19 @@
     <div id="userForm">
         <form enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
             {% csrf_token %}
+
+            <div id="userTypePop" class="user-type-pop">
+                <div class="user-content">
+                    <label for="userType">Choose a category</label>
+                    <select name="userType" id="userType">
+                        <option value="Талаба">Student</option>
+                        <option value="Донишчу">Educator</option>
+                        <option value="Корманд">Employee</option>
+                    </select>
+                    <button type="button" onclick="closeUserType()">Select</button>
+                </div>
+            </div>
+
             <label for="fullNameCyrillic">Full Name (Cyrillic):</label>
             <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" placeholder="Давлатов Давлат Давлатович"
                 required>
@@ -43,26 +56,81 @@
             <label for="birthdate">Date of Birth:</label><br>
             <input type="date" id="birthdate" name="birthdate" required><br>
 
-            <label for="department">Department:</label>
-                <select id="department" name="department" required>
-                    <option value="факултети идоракунии давлат">Faculty of Public Administration</option>
-                    <option value="факултети хукукшиноси">Faculty of law</option>
-                    <option value="факултети дипломатия ва сиёсат">Faculty of diplomacy and politics</option>
-                    <option value="факултети тахсилоти фосилави ва тахсилоти дуюми олии касби">Faculty of Distance Education and Second Higher Professional Education</option>
-                    <option value="шуъбаи магистратура">Master's Department</option>
-                    <option value="магистратураи 'мактаби давлатдории Эмомали Рахмон'">Master's degree "Emomail Rahmon school of government"</option>
-                    <option value="шуъбаи омодакунии кадрхои илми ва илми-педагоги">Department of training of scientific and scientific-pedagogical personnel</option>
-                </select>
+            <label for="region">Please select your region</label>
+            <select name="region" id="region">
+                <option value="И.Сомони">I. Somoni</option>
+                <option value="Дангара">Dangara</option>
+                <option value="Шохмансур">Shohmansur</option>
+                <option value="Рудаки">Rudaki</option>
+                <option value="Фирдавси">Firdavsi</option>
+                <option value="Сино">Sino</option>
+                <option value="Сангвор">Sangvor</option>
+                <option value="Варзоб">Varzob</option>
+                <option value="Нурек">Nurek</option>
+                <option value="Фархор">Farkhor</option>
+                <option value="Айни">Ayni</option>
+                <option value="Муминобод">Muminobod</option>
+                <option value="Гиссар">Gissar</option>
+                <option value="Вахдат">Vahdat</option>
+                <option value="Шахринав">Shahrinav</option>
+                <option value="Восеъ">Vose'</option>
+                <option value="Хорог">Khorog</option>
+                <option value="Шамсиддин Шохин">Shamsiddin Shokhin</option>
+                <option value="Файзабад">Fayzabad</option>
+                <option value="Бустон">Buston</option>
+                <option value="Куляб">Kulyab</option>
+                <option value="Худжанд">Khujand</option>
+                <option value="Рашт">Rasht</option>
+                <option value="Хамадони">Khamadoni</option>
+                <option value="Пенджикент">Pendzhikent</option>
+                <option value="Шугнан">Shugnan</option>
+                <option value="Яван">Yavan</option>
+                <option value="Кушониён">Kushoniyon</option>
+                <option value="Шахритуз">Shahrituz</option>
+                <option value="Сомони">Somoniyon</option>
+                <option value="Панч">Panch</option>
+                <option value="Сарбанд">Sarband</option>
+                <option value="Шохмансур">Shokhmansur</option>
+                <option value="Гисар">Gisar</option>
+                <option value="Ишкашим">Ishkashim</option>
+            </select>
+
+            <label for="school" id="schoolLabel" class="disable">School</label>
+            <input type="text" name="school" id="school" value=" " class="disable">
+
+            <label for="university" id="universityLabel" class="disable">University</label>
+            <input type="text" name="university" id="university" value=" " class="disable">
+
+            <label for="company" id="companyLabel" class="disable">Workplace</label>
+            <input type="text" name="company" id="company" value=" " class="disable">
 
 
-            <label for="eduType">Type of Education:</label>
-            <select id="eduType" name="eduType" required>
+
+            <label for="department" id="departmentLabel" class="disable">Department:</label>
+            <select id="department" name="department" class="disable" required>
+                <option value="" selected disabled>Choose department</option>
+                <option value="факултети идоракунии давлат">Faculty of Public Administration</option>
+                <option value="факултети хукукшиноси">Faculty of law</option>
+                <option value="факултети дипломатия ва сиёсат">Faculty of diplomacy and politics</option>
+                <option value="факултети тахсилоти фосилави ва тахсилоти дуюми олии касби">Faculty of Distance Education
+                    and Second Higher Professional Education</option>
+                <option value="шуъбаи магистратура">Master's Department</option>
+                <option value="магистратураи 'мактаби давлатдории Эмомали Рахмон'">Master's degree "Emomail Rahmon
+                    school of government"</option>
+                <option value="шуъбаи омодакунии кадрхои илми ва илми-педагоги">Department of training of scientific and
+                    scientific-pedagogical personnel</option>
+            </select>
+
+
+            <label for="eduType" id="eduTypeLabel" class="disable">Type of education:</label>
+            <select id="eduType" name="eduType" class="disable" required>
+                <option value="" selected disabled>Choose type of education</option>
                 <option value="Рӯзона">Daytime </option>
                 <option value="Ғоибона">In absentia</option>
             </select>
 
-            <label for="studentCard">Student ID Card:</label>
-            <input type="number" id="studentCard" name="studentCard" required>
+            <label for="studentCard" id="studentCardLabel" class="disable">Student ID card:</label>
+            <input type="number" id="studentCard" name="studentCard" class="disable" required>
 
             <label>Gender:</label><br>
             <label for="male">Male
@@ -173,56 +241,52 @@
                 <option value="ШВКД дар ноҳияи Сангвор">DCPD in Sangvor</option>
                 <option value="ШВКД дар ноҳияи Тоҷикобод">DCPD in Tajikabad</option>
                 <option value="ШВКД дар ноҳияи Лахш">DCPD in Lakhsh</option>
-                </select>
+            </select>
 
-                <label for="phoneNumber">Phone Number (without country code):</label>
-                <input type="number" id="phoneNumber" name="phoneNumber" required>
+            <label for="phoneNumber">Phone Number (without country code):</label>
+            <input type="number" id="phoneNumber" name="phoneNumber" required>
 
-                <p>Photo in 3x4 format</p>
-                <div class="file-input-container">
-                    <label for="photo3x4" class="file-input-button">Select File</label>
-                    <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input"
-                        required>
-                    <span class="file-name">File not selected</span>
-                </div><br>
+            <p class="disable" id="3x4P">Photo in 3x4 format</p>
+            <div class="file-input-container">
+                <label id="3x4Label" for="photo3x4" class="file-input-button disable">Select File</label>
+                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input disable" required>
+                <span id="3x4Span" class="file-name disable">File not selected</span>
+            </div><br>
 
-                <p>Passport Photo (front end)</p>
-                <div class="file-input-container">
-                    <label for="idPhotoFront" class="file-input-button">Select File</label>
-                    <input type="file" id="idPhotoFront" name="idPhotoFront" accept=".jpg, .jpeg, .png" class="file-input"
-                        required>
-                    <span class="file-name">File not selected</span>
-                </div><br>
+            <p>Passport Photo (front end)</p>
+            <div class="file-input-container">
+                <label for="idPhotoFront" class="file-input-button">Select File</label>
+                <input type="file" id="idPhotoFront" name="idPhotoFront" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">File not selected</span>
+            </div><br>
 
-                <p>Passport Photo (rear end)</p>
-                <div class="file-input-container">
-                    <label for="idPhotoBack" class="file-input-button">Select File</label>
-                    <input type="file" id="idPhotoBack" name="idPhotoBack" accept=".jpg, .jpeg, .png" class="file-input"
-                        required>
-                    <span class="file-name">File not selected</span>
-                </div><br>
+            <p>Passport Photo (rear end)</p>
+            <div class="file-input-container">
+                <label or="idPhotoFront" class="file-input-button">Select File</label>
+                <input type="file" id="idPhotoFront" name="idPhotoFront" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">File not selected</span>
+            </div><br>
 
-                <p>Your Photo with Passport - Detailed Identification (ID)</p>
-                <div class="file-input-container">
-                    <label for="idWithPhoto" class="file-input-button">Select File</label>
-                    <input type="file" id="idWithPhoto" name="idWithPhoto" accept=".jpg, .jpeg, .png" class="file-input"
-                        required>
-                    <span class="file-name">File not selected</span>
-                </div><br>
+            <p>Your Photo with Passport - Detailed Identification (ID)</p>
+            <div class="file-input-container">
+                <label for="idWithPhoto" class="file-input-button">Select File</label>
+                <input type="file" id="idWithPhoto" name="idWithPhoto" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <span class="file-name">File not selected</span>
+            </div><br>
 
-                <div style="display:flex;">
-                    <span style="color: red;">
-                        *
-                    </span>
-                    <span style="margin-right: 10px;">
-                        <input type="checkbox" name="accept" id="accept" required>
-                    </span>
-                    <label>
-                        I confirm that all the provided information is accurate and up-to-date.
-                    </label>
-                </div>
+            <div style="display:flex;">
+                <span style="color: red;">
+                    *
+                </span>
+                <span style="margin-right: 10px;">
+                    <input type="checkbox" name="accept" id="accept" required>
+                </span>
+                <label>
+                    I confirm that all the provided information is accurate and up-to-date.
+                </label>
+            </div>
 
-                <button type="submit">Submit</button>
+            <button type="submit">Submit</button>
         </form>
     </div>
 

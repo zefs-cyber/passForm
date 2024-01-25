@@ -32,6 +32,19 @@
     <div id="userForm">
         <form enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
             {% csrf_token %}
+
+            <div id="userTypePop" class="user-type-pop">
+                <div class="user-content">
+                    <label for="userType">Выберите категорию</label>
+                    <select name="userType" id="userType">
+                        <option value="Талаба">Ученик</option>
+                        <option value="Донишчу">Студент</option>
+                        <option value="Корманд">Работник</option>
+                    </select>
+                    <button type="button" onclick="closeUserType()">Выбрать</button>
+                </div>
+            </div>
+            
             <label for="fullNameCyrillic">Полное имя (кириллица):</label>
             <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" placeholder="Давлатов Давлат Давлатович"
                 required>
@@ -43,26 +56,81 @@
             <label for="birthdate">Дата рождения:</label><br>
             <input type="date" id="birthdate" name="birthdate" required><br>
 
-            <label for="department">Факультет:</label>
-                <select id="department" name="department" required>
+            <label for="region">Пожалуйста, выберите свой регион</label>
+            <select name="region" id="region">
+                <option value="И.Сомони">И.Сомони</option>
+                <option value="Дангара">Дангара</option>
+                <option value="Шохмансур">Шохмансур</option>
+                <option value="Рудаки">Рудаки</option>
+                <option value="Фирдавси">Фирдавси</option>
+                <option value="Сино">Сино</option>
+                <option value="Сангвор">Сангвор</option>
+                <option value="Варзоб">Варзоб</option>
+                <option value="Нурек">Нурек</option>
+                <option value="Фархор">Фархор</option>
+                <option value="Айни">Айни</option>
+                <option value="Муминобод">Муминобод</option>
+                <option value="Гиссар">Гиссар</option>
+                <option value="Вахдат">Вахдат</option>
+                <option value="Шахринав">Шахринав</option>
+                <option value="Восеъ">Восеъ</option>
+                <option value="Хорог">Хорог</option>
+                <option value="Шамсиддин Шохин">Шамсиддин Шохин</option>
+                <option value="Файзабад">Файзабад</option>
+                <option value="Бустон">Бустон</option>
+                <option value="Куляб">Куляб</option>
+                <option value="Худжанд">Худжанд</option>
+                <option value="Рашт">Рашт</option>
+                <option value="Хамадони">Хамадони</option>
+                <option value="Пенджикент">Пенджикент</option>
+                <option value="Шугнан">Шугнан</option>
+                <option value="Яван">Яван</option>
+                <option value="Кушониён">Кушониён</option>
+                <option value="Шахритуз">Шахритуз</option>
+                <option value="Сомони">Сомони</option>
+                <option value="Панч">Панч</option>
+                <option value="Сарбанд">Сарбанд</option>
+                <option value="Шохмансур">Шохмансур</option>
+                <option value="Гисар">Гисар</option>
+                <option value="Ишкашим">Ишкашим</option>
+            </select>
+
+            <label for="school" id="schoolLabel" class="disable">Школа</label>
+            <input type="text" name="school" id="school" value=" " class="disable">
+
+            <label for="university" id="universityLabel" class="disable">Университет</label>
+            <input type="text" name="university" id="university" value=" " class="disable">
+
+            <label for="company" id="companyLabel" class="disable">Место работы</label>
+            <input type="text" name="company" id="company" value=" " class="disable">
+
+
+
+            <label for="department" id="departmentLabel" class="disable">Факультет:</label>
+            <select id="department" name="department" class="disable" required>
+                <option value="" selected disabled>Выберите Факультет</option>
                 <option value="факултети идоракунии давлат">Факультет государственного управления</option>
                 <option value="факултети хукукшиноси">Факультет права</option>
                 <option value="факултети дипломатия ва сиёсат">Факультет дипломатии и политики</option>
-                <option value="факултети тахсилоти фосилави ва тахсилоти дуюми олии касби">Факультет дистанционного образования и второго высшего профессионального образования</option>
+                <option value="факултети тахсилоти фосилави ва тахсилоти дуюми олии касби">Факультет дистанционного
+                    образования и второго высшего профессионального образования</option>
                 <option value="шуъбаи магистратура">Магистратура</option>
-                <option value="магистратураи 'мактаби давлатдории Эмомали Рахмон'">Магистр «Школа государственного управления Эмомаила Рахмона»</option>
-                <option value="шуъбаи омодакунии кадрхои илми ва илми-педагоги">Отдел подготовки научных и научно-педагогических кадров</option>
+                <option value="магистратураи 'мактаби давлатдории Эмомали Рахмон'">Магистр «Школа государственного
+                    управления Эмомаила Рахмона»</option>
+                <option value="шуъбаи омодакунии кадрхои илми ва илми-педагоги">Отдел подготовки научных и
+                    научно-педагогических кадров</option>
             </select>
 
 
-            <label for="eduType">Форма обучения:</label>
-            <select id="eduType" name="eduType" required>
+            <label for="eduType" id="eduTypeLabel" class="disable">Форма обучения:</label>
+            <select id="eduType" name="eduType" class="disable" required>
+                <option value="" selected disabled>Выберите форму обучения</option>
                 <option value="Рӯзона">Очное </option>
                 <option value="Ғоибона">Заочное</option>
             </select>
 
-            <label for="studentCard">Студенческая карта:</label>
-            <input type="number" id="studentCard" name="studentCard" required>
+            <label for="studentCard" id="studentCardLabel" class="disable">Студенческая карта:</label>
+            <input type="number" id="studentCard" name="studentCard" class="disable" required>
 
             <label>Пол:</label><br>
             <label for="male">Мужской
@@ -178,13 +246,11 @@
             <label for="phoneNumber">Номер телефона (без кода страны):</label>
             <input type="number" id="phoneNumber" name="phoneNumber" required>
 
-            <p>Цветное фото 3х4</p>
+            <p class="disable" id="3x4P">Цветное фото 3х4</p>
             <div class="file-input-container">
-                <label for="photo3x4" class="file-input-button">
-                    Выберите файл</label>
-                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input" required>
-                <span class="file-name">
-                    Файл не выбран</span>
+                <label id="3x4Label" for="photo3x4" class="file-input-button disable">Выберите файл</label>
+                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input disable" required>
+                <span id="3x4Span" class="file-name disable">Файл не выбран</span>
             </div><br>
 
             <p>Фото паспорта (передняя часть)</p>
@@ -197,7 +263,8 @@
             <p>Фото паспорта (задняя часть)</p>
             <div class="file-input-container">
                 <label for="idPhotoBack" class="file-input-button">Выберите файл</label>
-                <input type="file" id="idPhotoBack" name="idPhotoBack" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <input type="file" id="idPhotoBack" name="idPhotoBack" accept=".jpg, .jpeg, .png" class="file-input"
+                    required>
                 <span class="file-name">Файл не выбран</span>
             </div><br>
 

@@ -23,13 +23,30 @@
     <div id="custom-scs" class="custom-scs">
         <div class="scs-content">
             <p id="alertMessage">Муваффақият!<br> Шакли шумо равон карда шуд</p>
-            <a href="https://www.ibt.tj/">
+            <a id='redir' href="https://www.ibt.tj/">
                 <button class="buttonscs">Continue</button>
             </a>
         </div>
     </div>
     <div id="overlay-scs" class="overlay-scs"></div>
+    <script>
+        var userAgent = navigator.userAgent;
+        var link = document.getElementById('redir');
+
+        // Check if the user agent string contains "Android" or "iOS"
+        if (/Android/i.test(userAgent)) {
+            // The user is using an Android device
+            link.setAttribute("href", "https://play.google.com/store/apps/details?id=tj.ibt.app&hl=ru&gl=US"); 
+        } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+            // The user is using an iOS device
+            link.setAttribute("href", "https://apps.apple.com/ru/app/ibt-24/id1515094392")
+        } else {
+            // The user is using a different device
+            link.setAttribute("href", "https://play.google.com/store/apps/details?id=tj.ibt.app&hl=ru&gl=US"); 
+        }
+    </script>
 
 </body>
+
 
 </html>

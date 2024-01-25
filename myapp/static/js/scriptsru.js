@@ -42,6 +42,77 @@ function closeCustomAlert() {
     document.getElementById('overlay').style.display = 'none';
 }
 
+function toggleForm(school, university, company, department, eduType, studentCard, photo3x4) {
+
+    if(school == 'enable'){
+        document.getElementById('schoolLabel').removeAttribute("required");
+    } 
+
+    if(university == 'enable'){
+        document.getElementById('universityLabel').removeAttribute("required");
+    }
+
+    if(company == 'enable'){
+        document.getElementById('companyLabel').removeAttribute("required");
+    }
+
+    if(department == 'enable'){
+        document.getElementById('departmentLabel').removeAttribute("required");
+    }
+
+    if(eduType == 'enable'){
+        document.getElementById('eduTypeLabel').removeAttribute("required");
+    }
+    
+    if(studentCard == 'enable'){
+        document.getElementById('studentCardLabel').removeAttribute("required");
+    }
+
+    if(photo3x4 == 'enable'){
+        document.getElementById('3x4Label').removeAttribute("required");
+    }
+
+
+    document.getElementById('school').className = school;
+    document.getElementById('schoolLabel').className = school;
+
+    document.getElementById('university').className = university;
+    document.getElementById('universityLabel').className = university;
+
+    document.getElementById('company').className = company;
+    document.getElementById('companyLabel').className = company;
+
+    document.getElementById('department').className = department;
+    document.getElementById('departmentLabel').className = department;
+
+    document.getElementById('eduType').className = eduType;
+    document.getElementById('eduTypeLabel').className = eduType;
+
+    document.getElementById('studentCard').className = studentCard;
+    document.getElementById('studentCardLabel').className = studentCard;
+
+    document.getElementById('3x4P').className = photo3x4;
+    document.getElementById('3x4Label').className = 'file-input-button '.concat(photo3x4);
+    document.getElementById('photo3x4').className = 'file-input '.concat(photo3x4);
+    document.getElementById('3x4Span').className = 'file-name '.concat(photo3x4);
+
+}
+
+function closeUserType() {
+    document.getElementById('userTypePop').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    var userType = document.getElementById('userType').value;
+    if (userType == 'Талаба') {
+        toggleForm('enable', 'disable', 'disable', 'disable', 'disable', 'disable', 'enable');
+    } else if (userType == 'Донишчу') {
+        toggleForm('disable', 'enable', 'disable', 'enable', 'enable', 'enable', 'enable');
+    } else if (userType == 'Корманд') {
+        toggleForm('disable', 'disable', 'enable', 'disable', 'disable', 'disable', 'disable');
+    } else {
+        showCustomAlert('Категорияро интихоб кунед!')
+    }
+}
+
 function validateForm() {
     // Добавьте свою логику валидации здесь
     var fullNameCyrillic = document.getElementById('fullNameCyrillic').value;

@@ -32,6 +32,19 @@
     <div id="userForm">
         <form enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
             {% csrf_token %}
+
+            <div id="userTypePop" class="user-type-pop">
+                <div class="user-content">
+                    <label for="userType">Категорияро интихоб кунед</label>
+                    <select name="userType" id="userType">
+                        <option value="Талаба">Талаба</option>
+                        <option value="Донишчу">Донишҷӯ</option>
+                        <option value="Корманд">Корманд</option>
+                    </select>
+                    <button type="button" onclick="closeUserType()">Интихоб</button>
+                </div>
+            </div>
+
             <label for="fullNameCyrillic">Номи пурра (кирилӣ):</label>
             <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" placeholder="Давлатов Давлат Давлатович"
                 required>
@@ -39,12 +52,64 @@
             <label for="fullNameLatin">Номи пурра (лотинӣ):</label>
             <input type="text" id="fullNameLatin" name="fullNameLatin" placeholder="Davlatov Davlat Davlatovich"
                 required>
-
+                
             <label for="birthdate">Санаи таваллуд:</label><br>
             <input type="date" id="birthdate" name="birthdate" required><br>
 
-            <label for="department">Факултет:</label>
-            <select id="department" name="department" required>
+            <label for="region">Лутфан минтақаи худро интихоб кунед</label>
+            <select name="region" id="region">
+                <option value="И.Сомони">И.Сомони</option>
+                <option value="Дангара">Дангара</option>
+                <option value="Шохмансур">Шохмансур</option>
+                <option value="Рудаки">Рудаки</option>
+                <option value="Фирдавси">Фирдавси</option>
+                <option value="Сино">Сино</option>
+                <option value="Сангвор">Сангвор</option>
+                <option value="Варзоб">Варзоб</option>
+                <option value="Нурек">Нурек</option>
+                <option value="Фархор">Фархор</option>
+                <option value="Айни">Айни</option>
+                <option value="Муминобод">Муминобод</option>
+                <option value="Гиссар">Гиссар</option>
+                <option value="Вахдат">Вахдат</option>
+                <option value="Шахринав">Шахринав</option>
+                <option value="Восеъ">Восеъ</option>
+                <option value="Хорог">Хорог</option>
+                <option value="Шамсиддин Шохин">Шамсиддин Шохин</option>
+                <option value="Файзабад">Файзабад</option>
+                <option value="Бустон">Бустон</option>
+                <option value="Куляб">Куляб</option>
+                <option value="Худжанд">Худжанд</option>
+                <option value="Рашт">Рашт</option>
+                <option value="Хамадони">Хамадони</option>
+                <option value="Пенджикент">Пенджикент</option>
+                <option value="Шугнан">Шугнан</option>
+                <option value="Яван">Яван</option>
+                <option value="Кушониён">Кушониён</option>
+                <option value="Шахритуз">Шахритуз</option>
+                <option value="Сомони">Сомони</option>
+                <option value="Панч">Панч</option>
+                <option value="Сарбанд">Сарбанд</option>
+                <option value="Шохмансур">Шохмансур</option>
+                <option value="Гисар">Гисар</option>
+                <option value="Ишкашим">Ишкашим</option>
+            </select>
+            
+                
+            <label for="school" id="schoolLabel" class="disable">Мактаб</label>
+            <input type="text" name="school" id="school" value=" " class="disable">
+
+            <label for="university" id="universityLabel" class="disable">Донишкада</label>
+            <input type="text" name="university" id="university" value=" " class="disable">
+
+            <label for="company" id="companyLabel" class="disable">Ҷои кор</label>
+            <input type="text" name="company" id="company" value=" " class="disable">
+
+
+
+            <label for="department" id="departmentLabel" class="disable">Факултет:</label>
+            <select id="department" name="department" class="disable" required>
+                <option value="" selected disabled>Факултетро интихоб кунед</option>
                 <option value="факултети идоракунии давлат">Факултети идоракунии давлатӣ</option>
                 <option value="факултети хукукшиноси">Факултети ҳуқуқшиносӣ</option>
                 <option value="факултети дипломатия ва сиёсат">Факултети дипломатия ва сиёсат</option>
@@ -58,14 +123,15 @@
             </select>
 
 
-            <label for="eduType">Шакли таҳсил:</label>
-            <select id="eduType" name="eduType" required>
+            <label for="eduType" id="eduTypeLabel" class="disable">Шакли таҳсил:</label>
+            <select id="eduType" name="eduType" class="disable" required>
+                <option value="" selected disabled>Факултетро интихоб кунед</option>
                 <option value="Рӯзона">Рӯзона </option>
                 <option value="Ғоибона">Ғоибона</option>
             </select>
 
-            <label for="studentCard">Корти донишҷӯ:</label>
-            <input type="number" id="studentCard" name="studentCard" required>
+            <label for="studentCard" id="studentCardLabel" class="disable">Корти донишҷӯ:</label>
+            <input type="number" id="studentCard" name="studentCard" class="disable" required>
 
             <label>Ҷинс:</label><br>
             <label for="male">Мард
@@ -181,11 +247,11 @@
             <label for="phoneNumber">Рақами телефон (бе рамзи кишвар):</label>
             <input type="number" id="phoneNumber" name="phoneNumber" required>
 
-            <p>Акси рангаи 3х4</p>
+            <p class="disable" id="3x4P">Акси рангаи 3х4</p>
             <div class="file-input-container">
-                <label for="photo3x4" class="file-input-button">Интихоби файл</label>
-                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input" required>
-                <span class="file-name">Файл интихоб нашудааст</span>
+                <label id="3x4Label" for="photo3x4" class="file-input-button disable">Интихоби файл</label>
+                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input disable" required>
+                <span id="3x4Span" class="file-name disable">Файл интихоб нашудааст</span>
             </div><br>
 
             <p>Акси паспорт(қисмати пеш)</p>
@@ -225,8 +291,8 @@
             <button type="submit">Равона кардан</button>
         </form>
     </div>
-
     <script src="{% static 'js/scriptstj.js' %}"></script>
+
 </body>
 
 </html>

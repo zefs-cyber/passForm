@@ -23,14 +23,17 @@ def index(request, language='tj'):
         if form.is_valid():
             form.save()
             print(f"{form.cleaned_data['fullNameCyrillic']} - accepted")  # Corrected quotes
+            print(form.cleaned_data)
             save_to_excel(form.cleaned_data)
             template_name = f"s_{language}.html"  
             return render(request, template_name)
     else:
         form = UserFill()
-    template_name = f"{language}.html"  
-    print(template_name)
-    return render(request, template_name, {'form': form})
+    if language in ['ru', 'tj', 'en']:
+        template_name = f"{language}.html"  
+        print(template_name)
+        return render(request, template_name, {'form': form})
+    return True
 
 def replace_tajik_characters(string):
     replacement_dict = {'Ғ': 'Г', 'ғ': 'г', 'Қ': 'К', 'қ': 'к', 'Ҷ': 'Ч', 'ҷ': 'ч',
@@ -195,6 +198,8 @@ def save_to_excel(form_data):
                 "Кем выдан паспорт",                            #11 Кем выдан паспорт
                 "Номер телефона",                               #12 Номер телефона
                 "ИНН",                                          #13 ИНН
+                "Работа/Учеба",
+                "Регион",
                 "Секретный вопрос",                             #14 Секретный вопрос
                 "Ответ",                                        #15 Ответ
                 "Адрес проживания/прописки",                    #16 Адрес проживания/прописки
@@ -204,17 +209,14 @@ def save_to_excel(form_data):
                 "",                                             #22 ????????
                 "Заполняется сотрудником банка",                #23 Заполняется сотрудником банка
                 "Зарплата сотрудников",                         #24 Зарплата сотрудников
-                "Национальный идентификатор",                   #25 национальный идентификатор
-                "Фото 3X4",                                     #27 Фото 3X4
-                "Фото паспорта",                                #28 Фото паспорта
-                "Селфи с паспортом",                            #29 Селфи с паспортом
             ]
         header_student = [
             "№", 
             "Ному насаб", 
             "Корти донишҷу", 
-            "Шуъба", 
-            "Шакли таҳсил", 
+            "факультет/мактаб", 
+            "Шакли таҳсил",
+            "Нохия",
             "Фото (цветное 3х4)"]
         ws_form.append(header_form)
         ws_student.append(header_student)
@@ -234,11 +236,19 @@ def save_to_excel(form_data):
 
     expirydate = datetime.strptime(str(form_data['expiryDate']), "%Y-%m-%d")
     formatted_expirydate = expirydate.strftime("%d.%m.%Y")
+
+    if form_data['userType'] == 'Талаба':
+        work_study = form_data['school']
+    elif form_data['userType'] == 'Донишчу':
+        work_study = form_data['university']
+    else:
+        work_study = form_data['comapny']
+
         
     
     data_row_form = [
-        ws_form.max_row + 1,
-        replace_tajik_characters(form_data['fullNameCyrillic'].lower()),
+        ws_form.max_row,
+        replace_tajik_characters(form_data['fullNameCyrillic'].title()),
         form_data['gender'][0],
         form_data['fullNameLatin'].upper(),
         formatted_birthday,
@@ -251,6 +261,8 @@ def save_to_excel(form_data):
         replace_tajik_characters(form_data['jobLocation']),
         form_data['phoneNumber'],
         form_data['rma'],
+        work_study,
+        form_data['region'],
         'Имя',
         replace_tajik_characters(form_data['fullNameCyrillic'].split(' ')[1]),
         replace_tajik_characters(form_data['address']),
@@ -262,35 +274,36 @@ def save_to_excel(form_data):
         "",]
     ws_form.append(data_row_form)
 
+    if form_data['userType'] != 'Корманд':
     # Data row for wb_student
-    data_row_student = [
-        ws_student.max_row+1,
-        replace_tajik_characters(form_data['fullNameCyrillic']),
-        form_data['studentCard'],
-        replace_tajik_characters(form_data['department']),
-        replace_tajik_characters(form_data['eduType']),
-    ]
-    ws_student.append(data_row_student)
+        data_row_student = [
+            ws_student.max_row+1,
+            replace_tajik_characters(form_data['fullNameCyrillic']),
+            form_data['studentCard'],
+            replace_tajik_characters(work_study),
+            replace_tajik_characters(form_data['eduType']),
+            form_data['region']
+        ]
+        ws_student.append(data_row_student)
+        wb_student.save('myapp\\media\\student_data.xlsx')
+
+        name = form_data['fullNameCyrillic'].replace(' ', '_')
+        try:
+            image_filename = f'{name}_photo3x4.jpg'
+            image_path = os.path.join('myapp', 'media', '3x4', image_filename)
+        except:
+            try:
+                image_filename = f'{name}_photo3x4.jpeg'
+                image_path = os.path.join('myapp', 'media', '3x4', image_filename)
+            except:
+                image_filename = f'{name}_photo3x4.png'
+                image_path = os.path.join('myapp', 'media', '3x4', image_filename)
+            
+        
+        new_width = 75  
+        new_height = 100
+        append_image(image_path, new_width, new_height)
 
     # Save the files
     wb_form.save('myapp\\media\\form_data.xlsx')
-    wb_student.save('myapp\\media\\student_data.xlsx')
-
-
-    name = form_data['fullNameCyrillic'].replace(' ', '_')
-    try:
-        image_filename = f'{name}_photo3x4.jpg'
-        image_path = os.path.join('myapp', 'media', '3x4', image_filename)
-    except:
-        try:
-            image_filename = f'{name}_photo3x4.jpeg'
-            image_path = os.path.join('myapp', 'media', '3x4', image_filename)
-        except:
-            image_filename = f'{name}_photo3x4.png'
-            image_path = os.path.join('myapp', 'media', '3x4', image_filename)
-        
-    
-    new_width = 75  
-    new_height = 100
-    append_image(image_path, new_width, new_height)
-    print(f'{form_data['fullNameCyrillic']} - saved')
+    print(f"{form_data['fullNameCyrillic']} - saved")

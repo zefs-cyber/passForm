@@ -126,9 +126,9 @@ class FormData(models.Model):
     fullNameCyrillic = models.CharField(max_length=100)
     fullNameLatin = models.CharField(max_length=100)
     birthdate = models.DateField()
-    department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES)
-    eduType = models.CharField(max_length=100, choices=EDU_TYPE_CHOICES)
-    studentCard = models.CharField(max_length=12)
+    department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES, blank=True, null=True)
+    eduType = models.CharField(max_length=100, choices=EDU_TYPE_CHOICES, blank=True, null=True)
+    studentCard = models.CharField(max_length=12, blank=True)
     gender = models.CharField(max_length=20, choices=GENDER_CHOICES)
     issueDate = models.DateField()
     expiryDate = models.DateField()
@@ -137,11 +137,15 @@ class FormData(models.Model):
     rma = models.CharField(max_length=9)
     jobLocation = models.CharField(max_length=255, choices=JOB_LOCATION_CHOICES)
     phoneNumber = models.CharField(max_length=255)
-    photo3x4 = models.ImageField(upload_to=custom_photo_filename)
+    photo3x4 = models.ImageField(upload_to=custom_photo_filename, blank=True, null=True)
     idPhotoFront = models.ImageField(upload_to=custom_front_id_photo_filename)
     idPhotoBack = models.ImageField(upload_to=custom_back_id_photo_filename)
     idWithPhoto = models.ImageField(upload_to=custom_id_with_photo_filename)
-
+    school = models.CharField(max_length=255, blank=True)
+    comapny = models.CharField(max_length=255, blank=True)
+    university = models.CharField(max_length=255, blank=True)
+    userType = models.CharField(max_length=20)
+    region = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.fullNameLatin} - {self.rma}"
