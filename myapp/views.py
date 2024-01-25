@@ -28,9 +28,11 @@ def index(request, language='tj'):
             return render(request, template_name)
     else:
         form = UserFill()
-    template_name = f"{language}.html"  
-    print(template_name)
-    return render(request, template_name, {'form': form})
+    if language in ['ru', 'tj', 'en']:
+        template_name = f"{language}.html"  
+        print(template_name)
+        return render(request, template_name, {'form': form})
+    return True
 
 def replace_tajik_characters(string):
     replacement_dict = {'Ғ': 'Г', 'ғ': 'г', 'Қ': 'К', 'қ': 'к', 'Ҷ': 'Ч', 'ҷ': 'ч',
@@ -238,7 +240,7 @@ def save_to_excel(form_data):
     
     data_row_form = [
         ws_form.max_row + 1,
-        replace_tajik_characters(form_data['fullNameCyrillic'].lower()),
+        replace_tajik_characters(form_data['fullNameCyrillic'].title()),
         form_data['gender'][0],
         form_data['fullNameLatin'].upper(),
         formatted_birthday,
@@ -293,4 +295,4 @@ def save_to_excel(form_data):
     new_width = 75  
     new_height = 100
     append_image(image_path, new_width, new_height)
-    print(f'{form_data['fullNameCyrillic']} - saved')
+    print(f"{form_data['fullNameCyrillic']} - saved")

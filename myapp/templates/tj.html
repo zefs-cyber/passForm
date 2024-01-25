@@ -32,6 +32,20 @@
     <div id="userForm">
         <form enctype="multipart/form-data" method="POST" onsubmit="return validateForm();">
             {% csrf_token %}
+
+            <div id="userTypePop" class="user-type-pop">
+                <div class="user-content">
+                    <label for="userType">Категорияро интихоб кунед</label>
+                    <select name="userType" id="userType">
+                        <option value="Талаба">Талаба</option>
+                        <option value="Донишчу">Донишҷӯ</option>
+                        <option value="Коргар">Коргар</option>
+                    </select>
+                    <button type="button" onclick="closeUserType()">Интихоб</button>
+                </div>
+            </div>
+
+
             <label for="fullNameCyrillic">Номи пурра (кирилӣ):</label>
             <input type="text" id="fullNameCyrillic" name="fullNameCyrillic" placeholder="Давлатов Давлат Давлатович"
                 required>
@@ -39,6 +53,9 @@
             <label for="fullNameLatin">Номи пурра (лотинӣ):</label>
             <input type="text" id="fullNameLatin" name="fullNameLatin" placeholder="Davlatov Davlat Davlatovich"
                 required>
+            
+            <label for="school" class="disable">Мактаб</label>
+            <input type="text" name="school" id="school" value=" " class="disable">
 
             <label for="birthdate">Санаи таваллуд:</label><br>
             <input type="date" id="birthdate" name="birthdate" required><br>
@@ -225,8 +242,8 @@
             <button type="submit">Равона кардан</button>
         </form>
     </div>
-
     <script src="{% static 'js/scriptstj.js' %}"></script>
+
 </body>
 
 </html>

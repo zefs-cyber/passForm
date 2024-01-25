@@ -8,6 +8,12 @@ function updateFileName() {
     this.parentElement.querySelector('.file-name').innerText = fileName || 'Файл интихоб нашудааст';
 }
 
+function closeUserType(){
+    document.getElementById('userTypePop').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    console.log('done');
+}
+
 function submitForm() {
     // Collect form data
     var formData = {
