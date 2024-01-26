@@ -52,7 +52,7 @@
             <label for="fullNameLatin">Номи пурра (лотинӣ):</label>
             <input type="text" id="fullNameLatin" name="fullNameLatin" placeholder="Davlatov Davlat Davlatovich"
                 required>
-                
+
             <label for="birthdate">Санаи таваллуд:</label><br>
             <input type="date" id="birthdate" name="birthdate" required><br>
 
@@ -94,8 +94,8 @@
                 <option value="Гисар">Гисар</option>
                 <option value="Ишкашим">Ишкашим</option>
             </select>
-            
-                
+
+
             <label for="school" id="schoolLabel" class="disable">Мактаб</label>
             <input type="text" name="school" id="school" value=" " class="disable">
 
@@ -250,21 +250,24 @@
             <p class="disable" id="3x4P">Акси рангаи 3х4</p>
             <div class="file-input-container">
                 <label id="3x4Label" for="photo3x4" class="file-input-button disable">Интихоби файл</label>
-                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input disable" required>
+                <input type="file" id="photo3x4" name="photo3x4" accept=".jpg, .jpeg, .png" class="file-input disable"
+                    required>
                 <span id="3x4Span" class="file-name disable">Файл интихоб нашудааст</span>
             </div><br>
 
             <p>Акси паспорт(қисмати пеш)</p>
             <div class="file-input-container">
                 <label for="idPhotoFront" class="file-input-button">Интихоби файл</label>
-                <input type="file" id="idPhotoFront" name="idPhotoFront" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <input type="file" id="idPhotoFront" name="idPhotoFront" accept=".jpg, .jpeg, .png" class="file-input"
+                    required>
                 <span class="file-name">Файл интихоб нашудааст</span>
             </div><br>
 
             <p>Акси паспорт(қисмати ақиб)</p>
             <div class="file-input-container">
                 <label for="idPhotoBack" class="file-input-button">Интихоби файл</label>
-                <input type="file" id="idPhotoBack" name="idPhotoBack" accept=".jpg, .jpeg, .png" class="file-input" required>
+                <input type="file" id="idPhotoBack" name="idPhotoBack" accept=".jpg, .jpeg, .png" class="file-input"
+                    required>
                 <span class="file-name">Файл интихоб нашудааст</span>
             </div><br>
 
@@ -292,6 +295,19 @@
         </form>
     </div>
     <script src="{% static 'js/scriptstj.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Set the "required" attribute to false for each element
+            document.getElementById("department").removeAttribute("required");
+            document.getElementById("eduType").removeAttribute("required");
+            document.getElementById("studentCard").removeAttribute("required");
+            document.getElementById("photo3x4").removeAttribute("required");
+            document.getElementById('schoolLabel').removeAttribute("required");
+            document.getElementById('university').removeAttribute("required");
+            document.getElementById('company').removeAttribute("required");
+            document.getElementById('studentCard').removeAttribute("required");
+        });
+    </script>
 
 </body>
 

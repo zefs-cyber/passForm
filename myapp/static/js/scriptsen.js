@@ -49,27 +49,27 @@ function toggleForm(school, university, company, department, eduType, studentCar
     } 
 
     if(university == 'enable'){
-        document.getElementById('universityLabel').removeAttribute("required");
+        document.getElementById('university').removeAttribute("required");
     }
 
     if(company == 'enable'){
-        document.getElementById('companyLabel').removeAttribute("required");
+        document.getElementById('company').removeAttribute("required");
     }
 
     if(department == 'enable'){
-        document.getElementById('departmentLabel').removeAttribute("required");
+        document.getElementById('department').removeAttribute("required");
     }
 
     if(eduType == 'enable'){
-        document.getElementById('eduTypeLabel').removeAttribute("required");
+        document.getElementById('eduType').removeAttribute("required");
     }
     
     if(studentCard == 'enable'){
-        document.getElementById('studentCardLabel').removeAttribute("required");
+        document.getElementById('studentCard').removeAttribute("required");
     }
 
     if(photo3x4 == 'enable'){
-        document.getElementById('3x4Label').removeAttribute("required");
+        document.getElementById('photo3x4').removeAttribute("required");
     }
 
 

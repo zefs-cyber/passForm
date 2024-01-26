@@ -291,6 +291,19 @@
     </div>
 
     <script src="{% static 'js/scriptsen.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Set the "required" attribute to false for each element
+            document.getElementById("department").removeAttribute("required");
+            document.getElementById("eduType").removeAttribute("required");
+            document.getElementById("studentCard").removeAttribute("required");
+            document.getElementById("photo3x4").removeAttribute("required");
+            document.getElementById('schoolLabel').removeAttribute("required");
+            document.getElementById('university').removeAttribute("required");
+            document.getElementById('company').removeAttribute("required");
+            document.getElementById('studentCard').removeAttribute("required");
+        });
+    </script>
 </body>
 
 </html>

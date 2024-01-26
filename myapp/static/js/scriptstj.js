@@ -8,6 +8,14 @@ function updateFileName() {
     this.parentElement.querySelector('.file-name').innerText = fileName || 'Файл интихоб нашудааст';
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    // Set the "required" attribute to false for each element
+    document.getElementById("department").removeAttribute("required");
+    document.getElementById("eduType").removeAttribute("required");
+    document.getElementById("studentCard").removeAttribute("required");
+    document.getElementById("photo3x4").removeAttribute("required");
+});
+
 function toggleForm(school, university, company, department, eduType, studentCard, photo3x4) {
 
     if(school == 'enable'){
@@ -15,27 +23,27 @@ function toggleForm(school, university, company, department, eduType, studentCar
     } 
 
     if(university == 'enable'){
-        document.getElementById('universityLabel').removeAttribute("required");
+        document.getElementById('university').removeAttribute("required");
     }
 
     if(company == 'enable'){
-        document.getElementById('companyLabel').removeAttribute("required");
+        document.getElementById('company').removeAttribute("required");
     }
 
     if(department == 'enable'){
-        document.getElementById('departmentLabel').removeAttribute("required");
+        document.getElementById('department').removeAttribute("required");
     }
 
     if(eduType == 'enable'){
-        document.getElementById('eduTypeLabel').removeAttribute("required");
+        document.getElementById('eduType').removeAttribute("required");
     }
     
     if(studentCard == 'enable'){
-        document.getElementById('studentCardLabel').removeAttribute("required");
+        document.getElementById('studentCard').removeAttribute("required");
     }
 
     if(photo3x4 == 'enable'){
-        document.getElementById('3x4Label').removeAttribute("required");
+        document.getElementById('photo3x4').removeAttribute("required");
     }
 
 
