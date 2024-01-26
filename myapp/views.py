@@ -39,12 +39,12 @@ def replace_tajik_characters(string):
     replacement_dict = {'Ғ': 'Г', 'ғ': 'г', 'Қ': 'К', 'қ': 'к', 'Ҷ': 'Ч', 'ҷ': 'ч',
                         'Ҳ': 'Х', 'ҳ': 'х', 'Ӣ': 'и', 'ӣ': 'и', 'Ӯ': 'У', 'ӯ': 'у'}
     modified_string = ""
-    
-    for char in string:
-        if char in replacement_dict:
-            modified_string += replacement_dict[char]
-        else:
-            modified_string += char
+    if string != None:
+        for char in string:
+            if char in replacement_dict:
+                modified_string += replacement_dict[char]
+            else:
+                modified_string += char
 
     return modified_string
 

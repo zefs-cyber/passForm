@@ -45,7 +45,7 @@ function closeCustomAlert() {
 function toggleForm(school, university, company, department, eduType, studentCard, photo3x4) {
 
     if(school == 'enable'){
-        document.getElementById('schoolLabel').removeAttribute("required");
+        document.getElementById('school').removeAttribute("required");
     } 
 
     if(university == 'enable'){
