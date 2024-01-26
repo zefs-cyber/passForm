@@ -58,7 +58,7 @@ def append_image(image_path, new_width=None, new_height=None):
     if new_height is not None:
         img.height = new_height
 
-    cell = f'F{existing_worksheet.max_row}' 
+    cell = f'G{existing_worksheet.max_row}' 
 
     # Extracting the row number from the cell string
     row_number = int(cell[1])
@@ -198,6 +198,7 @@ def save_to_excel(form_data):
                 "Кем выдан паспорт",                            #11 Кем выдан паспорт
                 "Номер телефона",                               #12 Номер телефона
                 "ИНН",                                          #13 ИНН
+                "userType",
                 "Работа/Учеба",
                 "Регион",
                 "Секретный вопрос",                             #14 Секретный вопрос
@@ -261,6 +262,7 @@ def save_to_excel(form_data):
         replace_tajik_characters(form_data['jobLocation']),
         form_data['phoneNumber'],
         form_data['rma'],
+        form_data['userType'],
         work_study,
         form_data['region'],
         'Имя',
