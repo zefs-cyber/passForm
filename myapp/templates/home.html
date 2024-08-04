@@ -1,0 +1,42 @@
+{% load static %}
+
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <title>Home</title>
+</head>
+<body>
+    <h2>Form Datas</h2>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <form method="post" action="{% url 'approve_rows' %}">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Passport Number</th>
+                    <!-- Add more columns as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for form_data_part in form_data_parts %}
+                    <tr>
+                        <td><input type="checkbox" name="selected_rows" value="{{ form_data_part.passport_number }}"></td>
+                        <td>{{ form_data_part.ФИО }}</td>
+                        <td>{{ form_data_part.passport_number }}</td>
+                        <!-- Render other columns -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Approve Selected Rows</button>
+    </form>
+</body>
+</html>

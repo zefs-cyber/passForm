@@ -142,7 +142,7 @@ class FormData(models.Model):
     idPhotoBack = models.ImageField(upload_to=custom_back_id_photo_filename)
     idWithPhoto = models.ImageField(upload_to=custom_id_with_photo_filename)
     school = models.CharField(max_length=255, blank=True)
-    comapny = models.CharField(max_length=255, blank=True)
+    company = models.CharField(max_length=255, blank=True)
     university = models.CharField(max_length=255, blank=True)
     userType = models.CharField(max_length=20)
     region = models.CharField(max_length=50)

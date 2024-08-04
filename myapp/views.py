@@ -7,6 +7,9 @@ from openpyxl.drawing.image import Image
 from openpyxl.utils import get_column_letter
 from datetime import datetime
 from django.core.files.storage import default_storage
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.http import FileResponse
 from .utils import zip_media_folder
@@ -243,7 +246,7 @@ def save_to_excel(form_data):
     elif form_data['userType'] == 'Донишчу':
         work_study = form_data['university']
     else:
-        work_study = form_data['comapny']
+        work_study = form_data['company']
 
         
     
@@ -309,3 +312,108 @@ def save_to_excel(form_data):
     # Save the files
     wb_form.save('myapp\\media\\form_data.xlsx')
     print(f"{form_data['fullNameCyrillic']} - saved")
+  
+def load_user_credentials(file_path):
+    try:
+        df = pd.read_excel(file_path)
+        return df.set_index('username').to_dict('index')
+    except FileNotFoundError:
+        return {}
+    except KeyError:
+        return {}
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        # Load user credentials from the Excel file
+
+        file_path = 'myapp\\user_credentials.xlsx'
+        user_credentials = load_user_credentials(file_path)
+        
+        # Authenticate user
+        if username in user_credentials and user_credentials[username]['password'] == password:
+            # Manually set the session for the user
+            request.session['username'] = username
+            return redirect('home')  # Redirect to home page after successful login
+        else:
+            return render(request, 'login.html', {'error': 'Invalid username or password.'})
+    else:
+        return render(request, 'login.html')
+
+def home(request):
+    # Ensure the user is authenticated
+    if 'username' not in request.session:
+        return redirect('login')
+
+    username = request.session['username']
+    
+    # Load user credentials
+    user_credentials_path = settings.BASE_DIR / 'myapp' / 'user_credentials.xlsx'
+    user_credentials = load_user_credentials(user_credentials_path)
+
+    if username not in user_credentials:
+        return redirect('login')
+
+    user_uni = user_credentials[username].get('uni')
+
+    if not user_uni:
+        return redirect('login')
+
+    # Load the Excel file
+    form_data_path = settings.BASE_DIR / 'myapp' / 'media' / 'form_data.xlsx'
+    df = pd.read_excel(form_data_path)
+    
+    # Filter rows where 'Работа/Учеба' corresponds to the user's 'uni'
+    df_filtered = df[df['Работа/Учеба'] == user_uni]
+    
+    # Combine 'Серия паспорта' and 'Номер паспорта' into one string
+    df_filtered['passport_number'] = df_filtered['Серия паспорта'].astype(str) + df_filtered['Номер паспорта'].astype(str)
+    
+    # Extract the relevant columns
+    form_data_parts = df_filtered[['ФИО', 'passport_number']].to_dict('records')
+    
+    # Print the extracted data for debugging
+    print(f"table {form_data_parts}")
+
+    # Render the template with the data
+    return render(request, 'home.html', {'form_data_parts': form_data_parts})
+
+def approve_rows(request):
+    if request.method == 'POST':
+        # Load the Excel file
+        file_path = 'myapp\\media\\form_data.xlsx'
+        df = pd.read_excel(file_path)
+        
+        # Combine 'Серия паспорта' and 'Номер паспорта' into one string
+        df['passport_number'] = df['Серия паспорта'].astype(str) + df['Номер паспорта'].astype(str)
+
+        # Get the selected rows from the form
+        selected_rows = request.POST.getlist('selected_rows')
+        
+        # Filter the DataFrame to get only the selected rows
+        approved_df = df[df['passport_number'].isin(selected_rows)]
+
+        # Append the selected rows to approved_form_data.xlsx
+        approved_file_path = 'myapp\\media\\approved_form_data.xlsx'
+        
+        try:
+            approved_df_existing = pd.read_excel(approved_file_path)
+            approved_df_combined = pd.concat([approved_df_existing, approved_df], ignore_index=True)
+        except FileNotFoundError:
+            approved_df_combined = approved_df
+
+        approved_df_combined.to_excel(approved_file_path, index=False)
+
+        # Remove approved rows from the original DataFrame
+        df = df[~df['passport_number'].isin(selected_rows)]
+        
+        # Save the updated DataFrame back to the original file
+        df.to_excel(file_path, index=False)
+
+        # Reload the home view with a success message
+        form_data_parts = df[['ФИО', 'passport_number']].to_dict('records')
+        return render(request, 'home.html', {'form_data_parts': form_data_parts, 'message': 'Selected rows have been approved and saved.'})
+
+    return redirect('home')  # Redirect back if not POST request
